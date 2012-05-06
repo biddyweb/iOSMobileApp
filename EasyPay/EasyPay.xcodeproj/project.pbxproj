@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA56A75F155586F400F671F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A75E155586F400F671F8 /* UIKit.framework */; };
+		BA56A761155586F400F671F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A760155586F400F671F8 /* Foundation.framework */; };
+		BA56A763155586F400F671F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A762155586F400F671F8 /* CoreGraphics.framework */; };
+		BA56A769155586F400F671F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA56A767155586F400F671F8 /* InfoPlist.strings */; };
+		BA56A76B155586F400F671F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A76A155586F400F671F8 /* main.m */; };
+		BA56A76F155586F400F671F8 /* KGDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A76E155586F400F671F8 /* KGDAppDelegate.m */; };
+		BA56A7871555B9A800F671F8 /* IndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A7851555B9A800F671F8 /* IndexViewController.m */; };
+		BA56A7881555B9A800F671F8 /* IndexViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA56A7861555B9A800F671F8 /* IndexViewController.xib */; };
+		BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A78A1555CB3600F671F8 /* Vendor.m */; };
+		BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A7921555E1B600F671F8 /* WebViewController.m */; };
+		BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA56A7931555E1B600F671F8 /* WebViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BA56A75A155586F400F671F8 /* EasyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA56A75E155586F400F671F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BA56A760155586F400F671F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA56A762155586F400F671F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BA56A766155586F400F671F8 /* EasyPay-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EasyPay-Info.plist"; sourceTree = "<group>"; };
+		BA56A768155586F400F671F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BA56A76A155586F400F671F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BA56A76C155586F400F671F8 /* EasyPay-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EasyPay-Prefix.pch"; sourceTree = "<group>"; };
+		BA56A76D155586F400F671F8 /* KGDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGDAppDelegate.h; sourceTree = "<group>"; };
+		BA56A76E155586F400F671F8 /* KGDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDAppDelegate.m; sourceTree = "<group>"; };
+		BA56A7841555B9A800F671F8 /* IndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexViewController.h; sourceTree = "<group>"; };
+		BA56A7851555B9A800F671F8 /* IndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexViewController.m; sourceTree = "<group>"; };
+		BA56A7861555B9A800F671F8 /* IndexViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IndexViewController.xib; sourceTree = "<group>"; };
+		BA56A7891555CB3600F671F8 /* Vendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vendor.h; sourceTree = "<group>"; };
+		BA56A78A1555CB3600F671F8 /* Vendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vendor.m; sourceTree = "<group>"; };
+		BA56A7911555E1B600F671F8 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		BA56A7921555E1B600F671F8 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		BA56A7931555E1B600F671F8 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA56A757155586F400F671F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA56A75F155586F400F671F8 /* UIKit.framework in Frameworks */,
+				BA56A761155586F400F671F8 /* Foundation.framework in Frameworks */,
+				BA56A763155586F400F671F8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA56A74F155586F300F671F8 = {
+			isa = PBXGroup;
+			children = (
+				BA56A764155586F400F671F8 /* EasyPay */,
+				BA56A75D155586F400F671F8 /* Frameworks */,
+				BA56A75B155586F400F671F8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA56A75B155586F400F671F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA56A75A155586F400F671F8 /* EasyPay.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA56A75D155586F400F671F8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA56A75E155586F400F671F8 /* UIKit.framework */,
+				BA56A760155586F400F671F8 /* Foundation.framework */,
+				BA56A762155586F400F671F8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA56A764155586F400F671F8 /* EasyPay */ = {
+			isa = PBXGroup;
+			children = (
+				BA56A76D155586F400F671F8 /* KGDAppDelegate.h */,
+				BA56A76E155586F400F671F8 /* KGDAppDelegate.m */,
+				BA56A765155586F400F671F8 /* Supporting Files */,
+				BA56A7841555B9A800F671F8 /* IndexViewController.h */,
+				BA56A7851555B9A800F671F8 /* IndexViewController.m */,
+				BA56A7861555B9A800F671F8 /* IndexViewController.xib */,
+				BA56A7891555CB3600F671F8 /* Vendor.h */,
+				BA56A78A1555CB3600F671F8 /* Vendor.m */,
+				BA56A7911555E1B600F671F8 /* WebViewController.h */,
+				BA56A7921555E1B600F671F8 /* WebViewController.m */,
+				BA56A7931555E1B600F671F8 /* WebViewController.xib */,
+			);
+			path = EasyPay;
+			sourceTree = "<group>";
+		};
+		BA56A765155586F400F671F8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA56A766155586F400F671F8 /* EasyPay-Info.plist */,
+				BA56A767155586F400F671F8 /* InfoPlist.strings */,
+				BA56A76A155586F400F671F8 /* main.m */,
+				BA56A76C155586F400F671F8 /* EasyPay-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA56A759155586F400F671F8 /* EasyPay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA56A772155586F400F671F8 /* Build configuration list for PBXNativeTarget "EasyPay" */;
+			buildPhases = (
+				BA56A756155586F400F671F8 /* Sources */,
+				BA56A757155586F400F671F8 /* Frameworks */,
+				BA56A758155586F400F671F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EasyPay;
+			productName = EasyPay;
+			productReference = BA56A75A155586F400F671F8 /* EasyPay.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA56A751155586F300F671F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = KGD;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = BA56A754155586F300F671F8 /* Build configuration list for PBXProject "EasyPay" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA56A74F155586F300F671F8;
+			productRefGroup = BA56A75B155586F400F671F8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA56A759155586F400F671F8 /* EasyPay */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA56A758155586F400F671F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA56A769155586F400F671F8 /* InfoPlist.strings in Resources */,
+				BA56A7881555B9A800F671F8 /* IndexViewController.xib in Resources */,
+				BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA56A756155586F400F671F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA56A76B155586F400F671F8 /* main.m in Sources */,
+				BA56A76F155586F400F671F8 /* KGDAppDelegate.m in Sources */,
+				BA56A7871555B9A800F671F8 /* IndexViewController.m in Sources */,
+				BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */,
+				BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BA56A767155586F400F671F8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA56A768155586F400F671F8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BA56A770155586F400F671F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BA56A771155586F400F671F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BA56A773155586F400F671F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EasyPay/EasyPay-Prefix.pch";
+				INFOPLIST_FILE = "EasyPay/EasyPay-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BA56A774155586F400F671F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EasyPay/EasyPay-Prefix.pch";
+				INFOPLIST_FILE = "EasyPay/EasyPay-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA56A754155586F300F671F8 /* Build configuration list for PBXProject "EasyPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA56A770155586F400F671F8 /* Debug */,
+				BA56A771155586F400F671F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA56A772155586F400F671F8 /* Build configuration list for PBXNativeTarget "EasyPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA56A773155586F400F671F8 /* Debug */,
+				BA56A774155586F400F671F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA56A751155586F300F671F8 /* Project object */;
+}
