@@ -1,18 +1,61 @@
 Notes on using git
 
+Cheat sheet
+-----------
+
+After modifying a file, you must add it to the repo. I know, it is already there, but just
+do this:
+
+	git add .
+
+The final dot means add all the modified files.
+
+To see what has been added to the repo:
+
+	git status
+
+These are all the files ready to be commited.
+
+	git commit
+
+will bring up an editor and you enter your message. Then exit the editor and the commit
+happens. This is just a local commit. Commit your brains out.
+
+	git push
+
+pushes the local repository to the remote.
+
+
+Git Setup
+---------
+The github.com site has a very good help file under Help > Beginner > Set up git.
+Downloading git is explained and the setup of ssh is also detailed. I followed the
+instructions there and found true happiness.
+
+
 To create a local repository; in the root of the tree you want as the repository
 
-git init
+	git init
 
 This creates a .git directory in your current working directory. All the git info will be here.
 
 Now declare the remote repository:
 
-git remote add origin git@github.com:LTI/iOSMobileApp.git
+	git remote add origin git@github.com:LTI/iOSMobileApp.git
 
-And now push the new repository:
 
-git push -u origin master
+After doing
+	git close git://github.com/LTI/iOSMobileApp.git
+I had to do
+	git remote set-url origin git@github.com:LTI/iOSMobileApp.git
+to make
+	git push
+work simply. On my laptop I have to enter my passphrase, but that seems to be an ssh issue.
+
+
+
+git push
+
 
 You will have to have setup the SSH keys. This is done in the account settings from the
 github web page for your account. There is a guide you can follow.
@@ -20,7 +63,9 @@ github web page for your account. There is a guide you can follow.
 The above instructions are only for the initial populating of the repository. I have already
 done this.
 
+
+
 To get a new copy of the repo:
 
-git clone git://github.com/LTI/iOSMobileApp
+	git clone git://github.com/LTI/iOSMobileApp
 
