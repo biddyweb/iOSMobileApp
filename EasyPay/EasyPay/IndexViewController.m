@@ -3,7 +3,7 @@
 //  EasyPay
 //
 //  Created by Hank Warren on 5/5/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 KGD Software. All rights reserved.
 //
 
 #import "IndexViewController.h"
