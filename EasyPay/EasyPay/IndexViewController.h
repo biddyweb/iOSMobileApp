@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class WebViewController;
 
-@interface IndexViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface IndexViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSXMLParserDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
@@ -17,6 +17,6 @@
 @property (strong, nonatomic) NSMutableData *xmlVendors;
 @property (strong, nonatomic) NSURLConnection *connectionInProgress;
 @property(strong, nonatomic) WebViewController *webViewController;
-
+@property(strong, nonatomic) NSMutableString *xmlResponse;
 -(void)loadVendors;
 @end
