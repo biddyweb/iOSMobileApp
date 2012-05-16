@@ -18,6 +18,7 @@
 		BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A78A1555CB3600F671F8 /* Vendor.m */; };
 		BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A7921555E1B600F671F8 /* WebViewController.m */; };
 		BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA56A7931555E1B600F671F8 /* WebViewController.xib */; };
+		BA7CFEDC1560DA1B00C8E46D /* VendorListResultDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		BA56A7911555E1B600F671F8 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		BA56A7921555E1B600F671F8 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		BA56A7931555E1B600F671F8 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		BA7CFEDA1560DA1B00C8E46D /* VendorListResultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VendorListResultDelegate.h; sourceTree = "<group>"; };
+		BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VendorListResultDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 				BA56A7911555E1B600F671F8 /* WebViewController.h */,
 				BA56A7921555E1B600F671F8 /* WebViewController.m */,
 				BA56A7931555E1B600F671F8 /* WebViewController.xib */,
+				BA7CFEDA1560DA1B00C8E46D /* VendorListResultDelegate.h */,
+				BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				BA56A7871555B9A800F671F8 /* IndexViewController.m in Sources */,
 				BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */,
 				BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */,
+				BA7CFEDC1560DA1B00C8E46D /* VendorListResultDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

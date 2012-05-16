@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class WebViewController;
+@class VendorListResultDelegate;
 
 @interface IndexViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSXMLParserDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -17,6 +18,8 @@
 @property (strong, nonatomic) NSMutableData *xmlVendors;
 @property (strong, nonatomic) NSURLConnection *connectionInProgress;
 @property(strong, nonatomic) WebViewController *webViewController;
-@property(strong, nonatomic) NSMutableString *xmlResponse;
+@property(strong, nonatomic) NSMutableString *xmlCharacters;
+@property(strong, nonatomic) NSMutableString *vendorString;
+@property(strong, nonatomic) VendorListResultDelegate *vendorList;
 -(void)loadVendors;
 @end

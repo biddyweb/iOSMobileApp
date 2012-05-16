@@ -9,6 +9,6 @@
 #import "Vendor.h"
 
 @implementation Vendor
-@synthesize name;
-
+@synthesize Name;
+@synthesize ID;
 @end

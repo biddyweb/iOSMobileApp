@@ -8,6 +8,8 @@
 
 #import "IndexViewController.h"
 #import "WebViewController.h"
+#import "VendorListResultDelegate.h"
+#import "Vendor.h"
 
 @interface IndexViewController ()
 
@@ -20,8 +22,16 @@
 @synthesize connectionInProgress;
 @synthesize xmlVendors;
 @synthesize webViewController;
-@synthesize xmlResponse;
+@synthesize xmlCharacters;
+@synthesize vendorString;
+@synthesize vendorList;
 
+
+/* The pragmas are used for Xcode navigation. */
+
+/* The UITableViewDataSource and UITableViewDataSource are protocols. The messages implemented
+ here are used to fill the table in the opening screen.
+ */
 #pragma mark - UITableViewDataSource (required)
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"VendorCell"];
@@ -32,47 +42,64 @@
     }
     
     // Load the cell with data
-    [[cell textLabel] setText:@"stuff"];
+    NSString *v = [[vendorList objectAtIndex:[indexPath row]] Name];
+    // MyLog( @"Vendor: %@", v );
+    [[cell textLabel] setText:v];
     
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [vendorList count];
 }
 
 #pragma mark - UITableViewDataSource (optional)
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    Vendor *v = [vendorList objectAtIndex:[indexPath row]];
+    MyLog( @"selected %@", [v Name] );
 }
+
+/*
+ * The following messages constitute the xml parser call backs; the joy of SAX.
+ * I use two instances of the parser, but only one delegate. The second instance is
+ * used to parse the embedded message. The tags for the different xml documents
+ * are blended here, but hopefully I can keep them separated.
+ */
 #pragma mark - NSXMLParserDelegate
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
-    MyLog( @"didStartElement: %@", elementName );
+//    MyLog( @"didStartElement: %@", elementName );
+//    NSString *key;
+//    for(key in attributeDict){
+//        MyLog(@"Key: %@, Value %@", key, [attributeDict objectForKey: key]);
+//    }
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
-    MyLog( @"didEndElement: %@", elementName );
+//    MyLog( @"didEndElement: %@", elementName );
     if( [elementName isEqualToString:@"VendorListResult"] ) {
-        MyLog( @"result: %@", xmlResponse );
+        vendorString = [NSString stringWithString:xmlCharacters];
     }
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    [xmlResponse appendString:string];
+    [xmlCharacters appendString:string];
 }
+
+/* The following implement the connection call backs. */
+
 #pragma mark - Connection delegate
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    MyLog( @"didReceiveData" );
+//    MyLog( @"didReceiveData" );
     [xmlVendors appendData:data];
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *xmlCheck = [[NSString alloc] initWithData:xmlVendors
                                                 encoding:NSUTF8StringEncoding];
-    MyLog( @"xmlCheck = %@", xmlCheck );
+//    MyLog( @"xmlCheck = %@", xmlCheck );
     [activityIndicatorView stopAnimating];
     
     NSRange range = [xmlCheck rangeOfString:@"<html>"];
@@ -91,6 +118,15 @@
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlVendors];
     [parser setDelegate:self];
     [parser parse];
+    
+//    MyLog( @"vendorString: %@", vendorString );
+    
+    vendorList = [[VendorListResultDelegate alloc] init];
+    parser = [[NSXMLParser alloc] initWithData:[vendorString dataUsingEncoding:NSUTF8StringEncoding]];
+    [parser setDelegate:vendorList];
+    [parser parse];
+//    [vendorList printArray];
+    [tableView reloadData];
 }
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     connectionInProgress = nil;
@@ -106,6 +142,11 @@
     [actionSheet showInView:[[self view] window]];
     [activityIndicatorView stopAnimating];
 }
+
+/*
+ * Setup the connection stuff and start the connection to get the
+ * list of vendors.
+ */
 -(void)loadVendors {
     [vendors removeAllObjects];
     [tableView reloadData];
@@ -117,11 +158,12 @@
     @"xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
     @"<soap:Body>"
     @"<VendorList xmlns='http://autopayments.com/'>"
-    @"<appUserName>9U2kUdr+OXcG9KKqgDl2ded1xCtprT/F5utk8ly4mjg=</appUserName>"
-    @"<appPassword>VqeJpd7OYVsYd0xl4POkmEfLpiHia1gA6rpwCKB0Mss=</appPassword>"
+    @"<appUserName>VqeJpd7OYVsYd0xl4POkmEfLpiHia1gA6rpwCKB0Mss=</appUserName>"
+    @"<appPassword>9U2kUdr+OXcG9KKqgDl2ded1xCtprT/F5utk8ly4mjg=</appPassword>"
     @"</VendorList>"
     @"</soap:Body>"
     @"</soap:Envelope>";
+    
     /*
     NSURL *url = [NSURL URLWithString:
                   @"https://mobile.autopayments.com/"
@@ -132,9 +174,6 @@
                   @"https://mobile.autopayments.com/"
                   @"MobileClientRsc/MobileClientRsc.asmx"];
     
-//                  @"&Function=VendorList"
-//                  @"&UserName=9U2kUdr+OXcG9KKqgDl2ded1xCtprT/F5utk8ly4mjg="
-//                  @"&Password=VqeJpd7OYVsYd0xl4POkmEfLpiHia1gA6rpwCKB0Mss="];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
                                                        cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                    timeoutInterval:30];
@@ -156,6 +195,9 @@
     MyLog( @"connection started" );
 }
 
+/*
+ * the rest is life cycle stuff for this view controller.
+ */
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadVendors];
@@ -168,7 +210,7 @@
         self.navigationItem.title = @"Vendor List";
         
         vendors = [[NSMutableArray alloc] init];
-        xmlResponse = [[NSMutableString alloc] init];
+        xmlCharacters = [[NSMutableString alloc] init];
     }
     return self;
 }

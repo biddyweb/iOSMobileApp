@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface Vendor : NSObject
-@property (strong, nonatomic) NSString *name;
-
+@property (strong, nonatomic) NSString *Name;
+@property(strong, nonatomic) NSString *ID;
 @end
