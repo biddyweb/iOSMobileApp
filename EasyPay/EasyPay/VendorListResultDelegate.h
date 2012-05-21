@@ -11,8 +11,11 @@
 @interface VendorListResultDelegate : NSObject <NSXMLParserDelegate> {
     NSMutableArray *vendorArray;
     NSMutableString *vendorString;
+    BOOL fault;
 }
+@property(strong,nonatomic) NSString *errorMessage;
 -(void)printArray;
 -(id)objectAtIndex:(int)index;
 -(int)count;
+-(BOOL)fault;
 @end

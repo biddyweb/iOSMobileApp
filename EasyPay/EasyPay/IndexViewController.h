@@ -8,18 +8,22 @@
 
 #import <UIKit/UIKit.h>
 @class WebViewController;
+@class VendorListDelegate;
 @class VendorListResultDelegate;
+@class LoginViewController;
 
-@interface IndexViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSXMLParserDelegate>
+
+@interface IndexViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    NSMutableData *xmlData;
+    VendorListDelegate *vendorListDelegate;
+    VendorListResultDelegate *vendorListResultDelegate;
+}
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
-
-@property (strong, nonatomic) NSMutableArray *vendors;
-@property (strong, nonatomic) NSMutableData *xmlVendors;
 @property (strong, nonatomic) NSURLConnection *connectionInProgress;
+
 @property(strong, nonatomic) WebViewController *webViewController;
-@property(strong, nonatomic) NSMutableString *xmlCharacters;
-@property(strong, nonatomic) NSMutableString *vendorString;
-@property(strong, nonatomic) VendorListResultDelegate *vendorList;
+@property(strong, nonatomic) LoginViewController *loginViewController;
+
 -(void)loadVendors;
 @end

@@ -8,9 +8,6 @@
 
 #import "WebViewController.h"
 
-@interface WebViewController ()
-
-@end
 
 @implementation WebViewController
 @synthesize webView;

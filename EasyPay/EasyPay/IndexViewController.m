@@ -9,23 +9,17 @@
 #import "IndexViewController.h"
 #import "WebViewController.h"
 #import "VendorListResultDelegate.h"
+#import "VendorListDelegate.h"
+#import "LoginViewController.h"
 #import "Vendor.h"
 
-@interface IndexViewController ()
-
-@end
 
 @implementation IndexViewController
 @synthesize tableView;
 @synthesize activityIndicatorView;
-@synthesize vendors;
-@synthesize connectionInProgress;
-@synthesize xmlVendors;
 @synthesize webViewController;
-@synthesize xmlCharacters;
-@synthesize vendorString;
-@synthesize vendorList;
-
+@synthesize loginViewController;
+@synthesize connectionInProgress;
 
 /* The pragmas are used for Xcode navigation. */
 
@@ -42,105 +36,29 @@
     }
     
     // Load the cell with data
-    NSString *v = [[vendorList objectAtIndex:[indexPath row]] Name];
+    NSString *v = [[vendorListResultDelegate objectAtIndex:[indexPath row]] Name];
     // MyLog( @"Vendor: %@", v );
     [[cell textLabel] setText:v];
     
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [vendorList count];
+    return [vendorListResultDelegate count];
 }
 
 #pragma mark - UITableViewDataSource (optional)
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Vendor *v = [vendorList objectAtIndex:[indexPath row]];
+    Vendor *v = [vendorListResultDelegate objectAtIndex:[indexPath row]];
     MyLog( @"selected %@", [v Name] );
-}
-
-/*
- * The following messages constitute the xml parser call backs; the joy of SAX.
- * I use two instances of the parser, but only one delegate. The second instance is
- * used to parse the embedded message. The tags for the different xml documents
- * are blended here, but hopefully I can keep them separated.
- */
-#pragma mark - NSXMLParserDelegate
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qualifiedName
-    attributes:(NSDictionary *)attributeDict {
-//    MyLog( @"didStartElement: %@", elementName );
-//    NSString *key;
-//    for(key in attributeDict){
-//        MyLog(@"Key: %@, Value %@", key, [attributeDict objectForKey: key]);
-//    }
-}
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName {
-//    MyLog( @"didEndElement: %@", elementName );
-    if( [elementName isEqualToString:@"VendorListResult"] ) {
-        vendorString = [NSString stringWithString:xmlCharacters];
+    if( !loginViewController ) {
+        loginViewController = [[LoginViewController alloc] init];
     }
-}
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    [xmlCharacters appendString:string];
-}
-
-/* The following implement the connection call backs. */
-
-#pragma mark - Connection delegate
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//    MyLog( @"didReceiveData" );
-    [xmlVendors appendData:data];
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString *xmlCheck = [[NSString alloc] initWithData:xmlVendors
-                                                encoding:NSUTF8StringEncoding];
-//    MyLog( @"xmlCheck = %@", xmlCheck );
-    [activityIndicatorView stopAnimating];
-    
-    NSRange range = [xmlCheck rangeOfString:@"<html>"];
-    if( range.length ) {    // maybe this is html - so display it.
-        MyLog( @"<html> at %d and %d characters long", range.location, range.length );
-
-        if( !webViewController ) {
-            webViewController = [[WebViewController alloc] init];
-        }
-        [[self navigationController] pushViewController:webViewController
-                                               animated:YES];
-        [webViewController setPage:xmlCheck];
-    }
-
-    // Parse the xml...
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlVendors];
-    [parser setDelegate:self];
-    [parser parse];
-    
-//    MyLog( @"vendorString: %@", vendorString );
-    
-    vendorList = [[VendorListResultDelegate alloc] init];
-    parser = [[NSXMLParser alloc] initWithData:[vendorString dataUsingEncoding:NSUTF8StringEncoding]];
-    [parser setDelegate:vendorList];
-    [parser parse];
-//    [vendorList printArray];
-    [tableView reloadData];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    connectionInProgress = nil;
-    xmlVendors = nil;
-    
-    NSString *errorString = [NSString stringWithFormat:@"Fetch failed: %@",
-                             [error localizedDescription]];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:errorString
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                               destructiveButtonTitle:nil
-                                                     otherButtonTitles:nil];
-    [actionSheet showInView:[[self view] window]];
-    [activityIndicatorView stopAnimating];
+    [loginViewController setVendorString:[v Name]];
+    [loginViewController setVendorIDString:[v ID]];
+    [[self navigationController] pushViewController:loginViewController
+                                           animated:YES];
 }
 
 /*
@@ -148,14 +66,12 @@
  * list of vendors.
  */
 -(void)loadVendors {
-    [vendors removeAllObjects];
-    [tableView reloadData];
     NSString *msg =
     @"<?xml version='1.0' encoding='utf-8'?>"
-    @"<soap:Envelope "
-    @"xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' "
-    @"xmlns:xsd='http://www.w3.org/2001/XMLSchema' "
-    @"xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
+    @"<soap:Envelope"
+    @" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'"
+    @" xmlns:xsd='http://www.w3.org/2001/XMLSchema'"
+    @" xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
     @"<soap:Body>"
     @"<VendorList xmlns='http://autopayments.com/'>"
     @"<appUserName>VqeJpd7OYVsYd0xl4POkmEfLpiHia1gA6rpwCKB0Mss=</appUserName>"
@@ -187,12 +103,78 @@
     if( connectionInProgress ) {
         [connectionInProgress cancel];
     }
-    xmlVendors = [[NSMutableData alloc] init];
-
     connectionInProgress = [[NSURLConnection alloc] initWithRequest:req
                                                            delegate:self
                                                    startImmediately:YES];
     MyLog( @"connection started" );
+}
+/* The following implement the connection call backs. */
+
+#pragma mark - Connection delegate
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    MyLog( @"didReceiveData" );
+    [xmlData appendData:data];
+}
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
+//                                               encoding:NSUTF8StringEncoding];
+//    MyLog( @"xmlCheck = %@", xmlCheck );
+    
+    
+    
+    //    NSRange range = [xmlCheck rangeOfString:@"<html>"];
+    //    if( range.length ) {    // maybe this is html - so display it.
+    //        MyLog( @"<html> at %d and %d characters long", range.location, range.length );
+    //        
+    //        if( !webViewController ) {
+    //            webViewController = [[WebViewController alloc] init];
+    //        }
+    //        [[self navigationController] pushViewController:webViewController
+    //                                               animated:YES];
+    //        [webViewController setPage:xmlCheck];
+    //    }
+
+    
+    // Parse the xml...
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
+    vendorListDelegate = [[VendorListDelegate alloc] init];
+    [parser setDelegate:vendorListDelegate];
+    [parser parse];
+    
+//    MyLog( @"vendorListResultString: %@", [vendorListDelegate vendorListResultString] );
+
+    // Now parse the vendorListResultString
+    parser = [[NSXMLParser alloc]
+              initWithData:[[vendorListDelegate vendorListResultString] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Use a different parser delegate for this blob of xml
+    vendorListResultDelegate = [[VendorListResultDelegate alloc] init];
+    [parser setDelegate:vendorListResultDelegate];
+    [parser parse];
+    //    [vendorList printArray];
+    
+    [activityIndicatorView stopAnimating];
+    if( [vendorListResultDelegate fault] ) {
+        MyLog( @"error: %@", [vendorListResultDelegate errorMessage] );
+    } else {
+        // We now have the list of vendors, so reload the table
+        [tableView reloadData];
+    }
+}
+
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    connectionInProgress = nil;
+    xmlData = nil;
+    
+    //    NSString *errorString = [NSString stringWithFormat:@"Fetch failed: %@",
+    //                             [error localizedDescription]];
+    //    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:errorString
+    //                                                             delegate:nil
+    //                                                    cancelButtonTitle:@"OK"
+    //                                               destructiveButtonTitle:nil
+    //                                                    otherButtonTitles:nil];
+    //    [actionSheet showInView:[[self view] window]];
+    //    [activityIndicatorView stopAnimating];
 }
 
 /*
@@ -207,10 +189,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         MyLog( @"initWithNibName %@", nibNameOrNil );
-        self.navigationItem.title = @"Vendor List";
-        
-        vendors = [[NSMutableArray alloc] init];
-        xmlCharacters = [[NSMutableString alloc] init];
+        self.navigationItem.title = @"Easy 2 Pay";
+        xmlData = [[NSMutableData alloc] init];
     }
     return self;
 }

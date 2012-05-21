@@ -18,6 +18,10 @@
 		BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A78A1555CB3600F671F8 /* Vendor.m */; };
 		BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA56A7921555E1B600F671F8 /* WebViewController.m */; };
 		BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA56A7931555E1B600F671F8 /* WebViewController.xib */; };
+		BA7C406615688D6B00819ED7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C406415688D6B00819ED7 /* LoginViewController.m */; };
+		BA7C406715688D6B00819ED7 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA7C406515688D6B00819ED7 /* LoginViewController.xib */; };
+		BA7C406B1568A34100819ED7 /* VendorListDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C406A1568A34100819ED7 /* VendorListDelegate.m */; };
+		BA7C40721569A3DB00819ED7 /* ValidateLoginResultDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */; };
 		BA7CFEDC1560DA1B00C8E46D /* VendorListResultDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,13 @@
 		BA56A7911555E1B600F671F8 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		BA56A7921555E1B600F671F8 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		BA56A7931555E1B600F671F8 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		BA7C406315688D6B00819ED7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		BA7C406415688D6B00819ED7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		BA7C406515688D6B00819ED7 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		BA7C40691568A34100819ED7 /* VendorListDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VendorListDelegate.h; sourceTree = "<group>"; };
+		BA7C406A1568A34100819ED7 /* VendorListDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VendorListDelegate.m; sourceTree = "<group>"; };
+		BA7C40701569A3DB00819ED7 /* ValidateLoginResultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateLoginResultDelegate.h; sourceTree = "<group>"; };
+		BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateLoginResultDelegate.m; sourceTree = "<group>"; };
 		BA7CFEDA1560DA1B00C8E46D /* VendorListResultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VendorListResultDelegate.h; sourceTree = "<group>"; };
 		BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VendorListResultDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +112,13 @@
 				BA56A7931555E1B600F671F8 /* WebViewController.xib */,
 				BA7CFEDA1560DA1B00C8E46D /* VendorListResultDelegate.h */,
 				BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */,
+				BA7C406315688D6B00819ED7 /* LoginViewController.h */,
+				BA7C406415688D6B00819ED7 /* LoginViewController.m */,
+				BA7C406515688D6B00819ED7 /* LoginViewController.xib */,
+				BA7C40691568A34100819ED7 /* VendorListDelegate.h */,
+				BA7C406A1568A34100819ED7 /* VendorListDelegate.m */,
+				BA7C40701569A3DB00819ED7 /* ValidateLoginResultDelegate.h */,
+				BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -170,6 +188,7 @@
 				BA56A769155586F400F671F8 /* InfoPlist.strings in Resources */,
 				BA56A7881555B9A800F671F8 /* IndexViewController.xib in Resources */,
 				BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */,
+				BA7C406715688D6B00819ED7 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +205,9 @@
 				BA56A78B1555CB3600F671F8 /* Vendor.m in Sources */,
 				BA56A7941555E1B600F671F8 /* WebViewController.m in Sources */,
 				BA7CFEDC1560DA1B00C8E46D /* VendorListResultDelegate.m in Sources */,
+				BA7C406615688D6B00819ED7 /* LoginViewController.m in Sources */,
+				BA7C406B1568A34100819ED7 /* VendorListDelegate.m in Sources */,
+				BA7C40721569A3DB00819ED7 /* ValidateLoginResultDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

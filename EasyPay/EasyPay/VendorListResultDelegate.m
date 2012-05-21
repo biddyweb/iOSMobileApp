@@ -10,12 +10,16 @@
 #import "Vendor.h"
 
 @implementation VendorListResultDelegate
+@synthesize errorMessage;
+
 -(id)init {
-    MyLog( @"VendorListResultDelegate init" );
     self = [super init];
     vendorArray = [[NSMutableArray alloc] init];
     vendorString = [[NSMutableString alloc] init];
     return self;
+}
+-(BOOL)fault {
+    return fault;
 }
 -(int)count {
     return [vendorArray count];
@@ -28,11 +32,13 @@
         MyLog( @"Name: %@ ID: %@", [obj Name], [obj ID] );
     }
 }
+
+// The data for the Vendor tag is in the attrubtes
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
-    MyLog( @"didStartElement: %@ (%@)", elementName, vendorString );
+    //MyLog( @"didStartElement: %@", elementName );
     if( [elementName isEqualToString:@"Vendor"] ) {
         NSString *key;
         Vendor *vendor = [[Vendor alloc] init];
@@ -45,6 +51,18 @@
             }
         }
         [vendorArray addObject:vendor];
+    } else if( [elementName isEqualToString:@"Error"] ) {
+        NSString *key, *error;
+        for( key in attributeDict ) {
+            error = [attributeDict objectForKey: key];
+            MyLog( @"Key: %@, Value: %@", key, error );
+            if( [error isEqualToString:@"Message 01"] ) {
+                errorMessage = @"username/password combination is incorrect.";
+            } else if( [error isEqualToString:@"Message 02"] ) {
+                errorMessage = @"No vendors were returned from the query.";
+            }
+        }
+        fault = YES;
     }
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -54,6 +72,7 @@
 //    if( [elementName isEqualToString:@"VendorListResult"] ) {
 //    }
 }
+// The tags are all empty
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     [vendorString appendString:string];
 }
