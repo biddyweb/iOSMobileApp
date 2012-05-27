@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 @class ValidateLoginResultDelegate;
+@class LoginDelegate;
 
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate> {
     NSURLConnection *connectionInProgress;
     NSMutableData *xmlData;
     ValidateLoginResultDelegate *validateLoginResultDelegate;
+    LoginDelegate *loginDelegate;
 }
 @property(strong,nonatomic) IBOutlet UILabel *vendorLabel;
 @property(strong,nonatomic) IBOutlet UITextField *usernameTextField;

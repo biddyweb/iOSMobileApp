@@ -30,6 +30,8 @@
     attributes:(NSDictionary *)attributeDict {
     if( [elementName isEqualToString:@"soap:Fault"] ) {
         faultDetected = YES;
+    } else if( [elementName isEqualToString:@"ErrorMessage"] ) {
+        faultDetected = YES;
     }
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -37,7 +39,9 @@
  qualifiedName:(NSString *)qName {
     if( [elementName isEqualToString:@"ValidateLoginResult"] ) {
         validateLoginResultString = [NSString stringWithString:xmlCharacters];
-    } else if( [elementName isEqualToString:@"soap:Text"] ) {
+    } else if( [elementName isEqualToString:@"faultstring"] ) {
+        errorMessage = [NSString stringWithString:xmlCharacters];
+    } else if( [elementName isEqualToString:@"ErrorMessage"] ) {
         errorMessage = [NSString stringWithString:xmlCharacters];
     }
     [xmlCharacters setString:@""];

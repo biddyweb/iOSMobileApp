@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "ValidateLoginResultDelegate.h"
+#import "LoginDelegate.h"
+#import "TextViewController.h"
 
 
 @implementation LoginViewController
@@ -51,7 +53,7 @@
                      @" xmlns:xsd='http://www.w3.org/2001/XMLSchema'"
                      @" xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>\n"
                      @"<soap:Body>"
-                     @"<ValidateLogin xmlns:xsi='http://autopayments.com/'>"
+                     @"<ValidateLogin xmlns='http://autopayments.com/'>"
                      @"<vendorId>%@</vendorId>"
                      @"<userName>%@</userName>"
                      @"<password>%@</password>"
@@ -97,9 +99,9 @@
     [xmlData appendData:data];
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
-                                               encoding:NSUTF8StringEncoding];
-    MyLog( @"LoginViewController - xmlCheck = %@", xmlCheck );
+//    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
+//                                               encoding:NSUTF8StringEncoding];
+//    MyLog( @"LoginViewController - xmlCheck = %@", xmlCheck );
 
     // Parse the xml...
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
@@ -107,10 +109,20 @@
     [parser setDelegate:validateLoginResultDelegate];
     [parser parse];
     
-    if( [validateLoginResultDelegate fault] ) {
-        MyLog( @"got a fault: %@", [validateLoginResultDelegate errorMessage] );
-    }
-//    [activityIndicatorView stopAnimating];
+//    TextViewController *textViewController = [[TextViewController alloc] init];
+//    [textViewController setText:[validateLoginResultDelegate validateLoginResultString]];
+//    //[[textViewController textView] setText:@"this is a test"];
+//    [[self navigationController] pushViewController:textViewController
+//                                           animated:YES];
+//    MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
+    loginDelegate = [[LoginDelegate alloc] init];
+    parser = [[NSXMLParser alloc]
+              initWithData:[[validateLoginResultDelegate validateLoginResultString]
+                            dataUsingEncoding:NSUTF8StringEncoding]];
+    [parser setDelegate:loginDelegate];
+    [parser parse];
+    
+    //    [activityIndicatorView stopAnimating];
 //    
 //    // We now have the list of vendors, so reload the table
 //    [tableView reloadData];

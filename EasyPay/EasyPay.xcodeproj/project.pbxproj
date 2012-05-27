@@ -23,6 +23,9 @@
 		BA7C406B1568A34100819ED7 /* VendorListDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C406A1568A34100819ED7 /* VendorListDelegate.m */; };
 		BA7C40721569A3DB00819ED7 /* ValidateLoginResultDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */; };
 		BA7CFEDC1560DA1B00C8E46D /* VendorListResultDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */; };
+		BA872CD7156BD49E00604FF8 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CD5156BD49E00604FF8 /* TextViewController.m */; };
+		BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA872CD6156BD49E00604FF8 /* TextViewController.xib */; };
+		BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CDD15713A0500604FF8 /* LoginDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +56,11 @@
 		BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateLoginResultDelegate.m; sourceTree = "<group>"; };
 		BA7CFEDA1560DA1B00C8E46D /* VendorListResultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VendorListResultDelegate.h; sourceTree = "<group>"; };
 		BA7CFEDB1560DA1B00C8E46D /* VendorListResultDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VendorListResultDelegate.m; sourceTree = "<group>"; };
+		BA872CD4156BD49E00604FF8 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		BA872CD5156BD49E00604FF8 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
+		BA872CD6156BD49E00604FF8 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		BA872CDC15713A0500604FF8 /* LoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDelegate.h; sourceTree = "<group>"; };
+		BA872CDD15713A0500604FF8 /* LoginDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +127,11 @@
 				BA7C406A1568A34100819ED7 /* VendorListDelegate.m */,
 				BA7C40701569A3DB00819ED7 /* ValidateLoginResultDelegate.h */,
 				BA7C40711569A3DB00819ED7 /* ValidateLoginResultDelegate.m */,
+				BA872CD4156BD49E00604FF8 /* TextViewController.h */,
+				BA872CD5156BD49E00604FF8 /* TextViewController.m */,
+				BA872CD6156BD49E00604FF8 /* TextViewController.xib */,
+				BA872CDC15713A0500604FF8 /* LoginDelegate.h */,
+				BA872CDD15713A0500604FF8 /* LoginDelegate.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -189,6 +202,7 @@
 				BA56A7881555B9A800F671F8 /* IndexViewController.xib in Resources */,
 				BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */,
 				BA7C406715688D6B00819ED7 /* LoginViewController.xib in Resources */,
+				BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +222,8 @@
 				BA7C406615688D6B00819ED7 /* LoginViewController.m in Sources */,
 				BA7C406B1568A34100819ED7 /* VendorListDelegate.m in Sources */,
 				BA7C40721569A3DB00819ED7 /* ValidateLoginResultDelegate.m in Sources */,
+				BA872CD7156BD49E00604FF8 /* TextViewController.m in Sources */,
+				BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
