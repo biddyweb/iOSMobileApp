@@ -20,6 +20,7 @@
 @property(strong,nonatomic) IBOutlet UILabel *vendorLabel;
 @property(strong,nonatomic) IBOutlet UITextField *usernameTextField;
 @property(strong,nonatomic) IBOutlet UITextField *passwordTextField;
+@property(strong,nonatomic) IBOutlet UILabel *errorLabel;
 
 @property(strong,nonatomic) NSString *vendorString;
 @property(strong,nonatomic) NSString *vendorIDString;

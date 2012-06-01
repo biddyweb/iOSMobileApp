@@ -11,8 +11,13 @@
 @interface LoginDelegate : NSObject <NSXMLParserDelegate> {
     NSMutableString *xmlCharacters;
     BOOL faultDetected;
+    NSString *ID;
 }
-@property(strong,nonatomic) NSString *errorMessage;
-
+@property(strong,nonatomic) NSString *loginHash;
+@property(strong,nonatomic) NSString *customerNumber;
+@property(strong,nonatomic) NSString *customerServicePhoneNumber;
+@property(strong,nonatomic) NSString *customerServiceEmail;
+@property(nonatomic) BOOL errorMessage;
+@property(strong,nonatomic) NSString *assistanceMessage;
 
 @end

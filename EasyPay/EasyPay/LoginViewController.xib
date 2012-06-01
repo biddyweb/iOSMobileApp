@@ -146,6 +146,7 @@
 								<string key="NSFrame">{{20, 164}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="596468724"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="770915328"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -166,6 +167,7 @@
 								<string key="NSFrame">{{20, 193}, {280, 31}}</string>
 								<reference key="NSSuperview" ref="596468724"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="67373208"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -187,6 +189,28 @@
 								<int key="IBUIClearButtonMode">1</int>
 								<reference key="IBUIFontDescription" ref="319773459"/>
 								<reference key="IBUIFont" ref="270667545"/>
+							</object>
+							<object class="IBUILabel" id="67373208">
+								<reference key="NSNextResponder" ref="596468724"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{20, 232}, {280, 100}}</string>
+								<reference key="NSSuperview" ref="596468724"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">Error Message</string>
+								<reference key="IBUITextColor" ref="712420104"/>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">0</int>
+								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUINumberOfLines">4</int>
+								<reference key="IBUIFontDescription" ref="627874063"/>
+								<reference key="IBUIFont" ref="807091354"/>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 460}</string>
@@ -252,6 +276,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">errorLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="67373208"/>
+					</object>
+					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="313698299"/>
 						<reference key="destination" ref="372490531"/>
@@ -303,6 +335,7 @@
 							<reference ref="313698299"/>
 							<reference ref="1008374953"/>
 							<reference ref="770915328"/>
+							<reference ref="67373208"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -331,6 +364,11 @@
 						<reference key="object" ref="770915328"/>
 						<reference key="parent" ref="596468724"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">20</int>
+						<reference key="object" ref="67373208"/>
+						<reference key="parent" ref="596468724"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -339,6 +377,7 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -350,7 +389,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">21</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -358,11 +397,16 @@
 					<string key="className">LoginViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="errorLabel">UILabel</string>
 						<string key="passwordTextField">UITextField</string>
 						<string key="usernameTextField">UITextField</string>
 						<string key="vendorLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="errorLabel">
+							<string key="name">errorLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="passwordTextField">
 							<string key="name">passwordTextField</string>
 							<string key="candidateClassName">UITextField</string>

@@ -19,6 +19,7 @@
 @synthesize vendorString;
 @synthesize vendorIDString;
 @synthesize validatedLoginString;
+@synthesize errorLabel;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if( textField == usernameTextField ) {
@@ -103,24 +104,41 @@
 //                                               encoding:NSUTF8StringEncoding];
 //    MyLog( @"LoginViewController - xmlCheck = %@", xmlCheck );
 
-    // Parse the xml...
+    // The message comes in 2 parts. The first XML document is a wrapper for a
+    // second XML document.
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
     validateLoginResultDelegate = [[ValidateLoginResultDelegate alloc] init];
     [parser setDelegate:validateLoginResultDelegate];
     [parser parse];
     
-//    TextViewController *textViewController = [[TextViewController alloc] init];
-//    [textViewController setText:[validateLoginResultDelegate validateLoginResultString]];
-//    //[[textViewController textView] setText:@"this is a test"];
-//    [[self navigationController] pushViewController:textViewController
-//                                           animated:YES];
-//    MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
+    // Now parse the second XML document. This one has the actual login information.
     loginDelegate = [[LoginDelegate alloc] init];
     parser = [[NSXMLParser alloc]
               initWithData:[[validateLoginResultDelegate validateLoginResultString]
                             dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setDelegate:loginDelegate];
     [parser parse];
+    
+    if( [loginDelegate errorMessage] ) {
+        NSMutableString *msg = [[NSMutableString alloc] init];
+        [msg appendString:@"Login failed; "];
+        [msg appendString:loginDelegate.assistanceMessage];
+        [msg appendString:@"\n"];
+        if( [loginDelegate.customerServicePhoneNumber length] > 0 ) {
+            [msg appendString:@"Customer Service Phone Number:\n"];
+            [msg appendString:loginDelegate.customerServicePhoneNumber];
+        }
+        [errorLabel setText:msg];
+        [errorLabel setHidden:NO];
+    } else {
+        MyLog( @"login was successful" );
+        //    TextViewController *textViewController = [[TextViewController alloc] init];
+        //    [textViewController setText:[validateLoginResultDelegate validateLoginResultString]];
+        //    //[[textViewController textView] setText:@"this is a test"];
+        //    [[self navigationController] pushViewController:textViewController
+        //                                           animated:YES];
+        //    MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
+    }
     
     //    [activityIndicatorView stopAnimating];
 //    

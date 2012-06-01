@@ -26,6 +26,7 @@
 		BA872CD7156BD49E00604FF8 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CD5156BD49E00604FF8 /* TextViewController.m */; };
 		BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA872CD6156BD49E00604FF8 /* TextViewController.xib */; };
 		BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CDD15713A0500604FF8 /* LoginDelegate.m */; };
+		BA872CFD1574715500604FF8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CFC1574715500604FF8 /* TableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,8 @@
 		BA872CD6156BD49E00604FF8 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
 		BA872CDC15713A0500604FF8 /* LoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDelegate.h; sourceTree = "<group>"; };
 		BA872CDD15713A0500604FF8 /* LoginDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDelegate.m; sourceTree = "<group>"; };
+		BA872CFB1574715500604FF8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
+		BA872CFC1574715500604FF8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,8 @@
 				BA872CD6156BD49E00604FF8 /* TextViewController.xib */,
 				BA872CDC15713A0500604FF8 /* LoginDelegate.h */,
 				BA872CDD15713A0500604FF8 /* LoginDelegate.m */,
+				BA872CFB1574715500604FF8 /* TableCell.h */,
+				BA872CFC1574715500604FF8 /* TableCell.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 				BA7C40721569A3DB00819ED7 /* ValidateLoginResultDelegate.m in Sources */,
 				BA872CD7156BD49E00604FF8 /* TextViewController.m in Sources */,
 				BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */,
+				BA872CFD1574715500604FF8 /* TableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
