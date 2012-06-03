@@ -27,6 +27,11 @@
 		BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA872CD6156BD49E00604FF8 /* TextViewController.xib */; };
 		BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CDD15713A0500604FF8 /* LoginDelegate.m */; };
 		BA872CFD1574715500604FF8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872CFC1574715500604FF8 /* TableCell.m */; };
+		BA872D04157AFD9A00604FF8 /* PaymentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D03157AFD9A00604FF8 /* PaymentTableViewController.m */; };
+		BA872D08157B072000604FF8 /* PaymentMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D07157B072000604FF8 /* PaymentMethod.m */; };
+		BA872D0B157B0BED00604FF8 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0A157B0BED00604FF8 /* Bill.m */; };
+		BA872D0E157B0DE200604FF8 /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0D157B0DE200604FF8 /* Bills.m */; };
+		BA872D10157B15E100604FF8 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0F157B15E100604FF8 /* util.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +69,15 @@
 		BA872CDD15713A0500604FF8 /* LoginDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDelegate.m; sourceTree = "<group>"; };
 		BA872CFB1574715500604FF8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
 		BA872CFC1574715500604FF8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
+		BA872D02157AFD9A00604FF8 /* PaymentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentTableViewController.h; sourceTree = "<group>"; };
+		BA872D03157AFD9A00604FF8 /* PaymentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentTableViewController.m; sourceTree = "<group>"; };
+		BA872D06157B072000604FF8 /* PaymentMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentMethod.h; sourceTree = "<group>"; };
+		BA872D07157B072000604FF8 /* PaymentMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethod.m; sourceTree = "<group>"; };
+		BA872D09157B0BED00604FF8 /* Bill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bill.h; sourceTree = "<group>"; };
+		BA872D0A157B0BED00604FF8 /* Bill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bill.m; sourceTree = "<group>"; };
+		BA872D0C157B0DE200604FF8 /* Bills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bills.h; sourceTree = "<group>"; };
+		BA872D0D157B0DE200604FF8 /* Bills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bills.m; sourceTree = "<group>"; };
+		BA872D0F157B15E100604FF8 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +151,15 @@
 				BA872CDD15713A0500604FF8 /* LoginDelegate.m */,
 				BA872CFB1574715500604FF8 /* TableCell.h */,
 				BA872CFC1574715500604FF8 /* TableCell.m */,
+				BA872D02157AFD9A00604FF8 /* PaymentTableViewController.h */,
+				BA872D03157AFD9A00604FF8 /* PaymentTableViewController.m */,
+				BA872D06157B072000604FF8 /* PaymentMethod.h */,
+				BA872D07157B072000604FF8 /* PaymentMethod.m */,
+				BA872D09157B0BED00604FF8 /* Bill.h */,
+				BA872D0A157B0BED00604FF8 /* Bill.m */,
+				BA872D0C157B0DE200604FF8 /* Bills.h */,
+				BA872D0D157B0DE200604FF8 /* Bills.m */,
+				BA872D0F157B15E100604FF8 /* util.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -230,6 +253,11 @@
 				BA872CD7156BD49E00604FF8 /* TextViewController.m in Sources */,
 				BA872CDE15713A0500604FF8 /* LoginDelegate.m in Sources */,
 				BA872CFD1574715500604FF8 /* TableCell.m in Sources */,
+				BA872D04157AFD9A00604FF8 /* PaymentTableViewController.m in Sources */,
+				BA872D08157B072000604FF8 /* PaymentMethod.m in Sources */,
+				BA872D0B157B0BED00604FF8 /* Bill.m in Sources */,
+				BA872D0E157B0DE200604FF8 /* Bills.m in Sources */,
+				BA872D10157B15E100604FF8 /* util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

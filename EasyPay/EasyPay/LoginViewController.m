@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "ValidateLoginResultDelegate.h"
 #import "LoginDelegate.h"
+#import "PaymentTableViewController.h"
 #import "TextViewController.h"
 
 
@@ -119,25 +120,31 @@
     [parser setDelegate:loginDelegate];
     [parser parse];
     
-    if( [loginDelegate errorMessage] ) {
+    NSString *lh = [loginDelegate loginHash];
+
+    if( [lh length] == 0 ) {
         NSMutableString *msg = [[NSMutableString alloc] init];
-        [msg appendString:@"Login failed; "];
-        [msg appendString:loginDelegate.assistanceMessage];
-        [msg appendString:@"\n"];
-        if( [loginDelegate.customerServicePhoneNumber length] > 0 ) {
-            [msg appendString:@"Customer Service Phone Number:\n"];
-            [msg appendString:loginDelegate.customerServicePhoneNumber];
+        if( [loginDelegate errorMessage] ) {
+            [msg appendString:@"Login failed; "];
+            [msg appendString:loginDelegate.assistanceMessage];
+            [msg appendString:@"\n"];
+            if( [loginDelegate.customerServicePhoneNumber length] > 0 ) {
+                [msg appendString:@"Customer Service Phone Number:\n"];
+                [msg appendString:loginDelegate.customerServicePhoneNumber];
+            }
+        } else {
+            [msg appendString:@"Login failed: You are on your own."];
         }
         [errorLabel setText:msg];
         [errorLabel setHidden:NO];
     } else {
         MyLog( @"login was successful" );
-        //    TextViewController *textViewController = [[TextViewController alloc] init];
-        //    [textViewController setText:[validateLoginResultDelegate validateLoginResultString]];
-        //    //[[textViewController textView] setText:@"this is a test"];
-        //    [[self navigationController] pushViewController:textViewController
-        //                                           animated:YES];
-        //    MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
+        PaymentTableViewController *paymentTableViewController = [[PaymentTableViewController alloc] init];
+        [paymentTableViewController setLoginDelegate:loginDelegate];
+        [[self navigationController] pushViewController:paymentTableViewController
+                                               animated:YES];
+        MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
+        [errorLabel setHidden:YES];
     }
     
     //    [activityIndicatorView stopAnimating];

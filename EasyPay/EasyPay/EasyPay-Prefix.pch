@@ -12,6 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 
+BOOL string2BOOL( NSString *str );
+
 #define MyLog if(0); else NSLog
 
 #endif

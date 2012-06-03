@@ -7,6 +7,10 @@
 //
 
 #import "LoginDelegate.h"
+#import "PaymentMethod.h"
+#import "Bills.h"
+#import "Bill.h"
+
 
 @implementation LoginDelegate
 @synthesize errorMessage;
@@ -15,6 +19,20 @@
 @synthesize loginHash;
 @synthesize customerServiceEmail;
 @synthesize assistanceMessage;
+@synthesize paymentMethodSet;
+@synthesize billSet;
+
+
+-(id)init {
+    self = [super init];
+    MyLog( @"LoginDelegate init" );
+    
+    paymentMethodSet = [[NSMutableSet alloc] init];
+    billSet = [[NSMutableSet alloc] init];
+    bills = [[Bills alloc] init];
+    
+    return self;
+}
 
 /*
  * The following messages constitute the xml parser call backs; the joy of SAX.
@@ -47,9 +65,111 @@
         errorMessage = TRUE;
         for( key in attributeDict ) {
             MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);
-
-            assistanceMessage = [attributeDict objectForKey:key];
+            if( [key isEqualToString:@"AssistanceMessage"] ) {
+                assistanceMessage = [attributeDict objectForKey:key];
+            }
         }
+    } else if( [elementName isEqualToString:@"PaymentMethod"] ) {
+        MyLog( @"elementName: %@", elementName );
+        PaymentMethod *paymentMethod = [[PaymentMethod alloc] init];
+        for( key in attributeDict ) {
+            MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);
+
+            if( [key isEqualToString:@"AccountDescription"] ) {
+                [paymentMethod setAccountDescription:[attributeDict objectForKey:key]];
+            } else if( [key isEqualToString:@"Default"] ) {
+                [paymentMethod setDefaultMethod:string2BOOL( [attributeDict objectForKey:key] ) ];
+            } else if( [key isEqualToString:@"ShowCCV"] ) {
+                [paymentMethod setShowCCV:string2BOOL( [attributeDict objectForKey:key] )];
+            } else if( [key isEqualToString:@"PaymentMethodID"] ) {
+                [paymentMethod setPaymentMethodID:[attributeDict objectForKey:key]];
+            } else if( [key isEqualToString:@"AccountName"] ) {
+                [paymentMethod setAccountName:[attributeDict objectForKey:key]];
+            }
+        }
+        [paymentMethodSet addObject:paymentMethod];
+        
+    } else if( [elementName isEqualToString:@"Bills"] ) {
+        MyLog( @"elementName: %@", elementName );
+        for( key in attributeDict ) {
+            NSString *tmp = [attributeDict objectForKey:key];
+            MyLog(@"Key: %@, Value: %@", key, tmp);
+            
+            if( [key isEqualToString:@"MaximumContribution"] ) {
+                [bills setMaximumContribution:[tmp floatValue]];
+            } else if( [key isEqualToString:@"VisibleAccountNumber"] ) {
+                [bills setVisibleAccountNumber:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleCurrentReading"] ) {
+                [bills setVisibleCurrentReading:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleAmountToPayEntry"] ) {
+                [bills setVisibleAmountToPayEntry:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"TransactionFeeCreditCard"] ) {
+                [bills setTransactionFeeCreditCard:[tmp floatValue]];
+            } else if( [key isEqualToString:@"TransactionFeeEFT"] ) {
+                [bills setTransactionFeeEFT:[tmp floatValue]];
+            } else if( [key isEqualToString:@"PaymentPending"] ) {
+                [bills setPaymentPending:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleCurrentDue"] ) {
+                [bills setVisibleCurrentDue:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"InCollections"] ) {
+                [bills setInCollections:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"AccountNumberName"] ) {
+                [bills setAccountNumberName:tmp];
+            } else if( [key isEqualToString:@"LatestAllowedScheduleDate"] ) {
+                [bills setLatestAllowedScheduleDate:tmp];
+            } else if( [key isEqualToString:@"VisibleTotalPaid"] ) {
+                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"TransactionFeeCreditCardPercent"] ) {
+                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleBillCycle"] ) {
+                [bills setVisibleBillCycle:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleBalanceForward"] ) {
+                [bills setVisibleBalanceForward:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"TransactionFeeEFTPercent"] ) {
+                [bills setTransactionFeeEFTPercent:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisiblePreviousReading"] ) {
+                [bills setVisiblePreviousReading:string2BOOL( tmp )];
+            }
+        }
+    } else if( [elementName isEqualToString:@"Bill"] ) {
+        MyLog( @"elementName: %@", elementName );
+        Bill *bill = [[Bill alloc] init];
+        NSString *str = [attributeDict objectForKey:key];
+
+        for( key in attributeDict ) {
+            MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);
+            
+            if( [key isEqualToString:@"BalanceForward"] ) {
+
+            } else if( [key isEqualToString:@"TotalPaid"] ) {
+                [bill setTotalPaid:[str floatValue]];
+            } else if( [key isEqualToString:@"Pay"] ) {
+                [bill setTotalPaid:[str floatValue]];
+            } else if( [key isEqualToString:@"TotalDue"] ) {
+                [bill setTotalDue:[str floatValue]];
+            } else if( [key isEqualToString:@"TotalPaidDisplay"] ) {
+                [bill setTotalPaidDisplay:str];
+            } else if( [key isEqualToString:@"AccountNumber"] ) {
+                [bill setAccountNumber:str];
+            } else if( [key isEqualToString:@"AccountNumberDisplay"] ) {
+                [bill setAccountNumberDisplay:str];
+            } else if( [key isEqualToString:@"BillCycle"] ) {
+                
+            } else if( [key isEqualToString:@"CurrentCharges"] ) {
+                [bill setCurrentCharges:[str floatValue]];
+            } else if( [key isEqualToString:@"DueDate"] ) {
+                [bill setDueDate:str];
+            } else if( [key isEqualToString:@"CustomerNumber"] ) {
+                [bill setCustomerNumber:str];
+            } else if( [key isEqualToString:@"TotalDueDisplay"] ) {
+                [bill setTotalDueDisplay:str];
+            } else if( [key isEqualToString:@"BillDate"] ) {
+                [bill setBillDate:str];
+            } else if( [key isEqualToString:@"CurrentReading"] ) {
+                [bill setCurrentReading:str];
+            }
+        }
+        [billSet addObject:bill];
     } else {
         for( key in attributeDict ) {
             MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);            
@@ -64,6 +184,7 @@
 
     [xmlCharacters setString:@""];
 }
+
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     [xmlCharacters appendString:string];
 }
