@@ -7,6 +7,14 @@
 //
 
 #import "PaymentTableViewController.h"
+#import "PaymentMethodCell.h"
+#import "LoginDelegate.h"
+#import "PaymentMethod.h"
+
+
+#define PAYMENT_METHOD 0
+#define PAYMENT_AMOUNT 1
+#define PAYMENT_DATE 2
 
 
 @implementation PaymentTableViewController
@@ -45,7 +53,6 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
@@ -55,25 +62,83 @@
 {
     int rows = 0;
     switch( section ) {
-        case 0: rows = 2; break;
-        case 1: rows = 4; break;
-        case 2: rows = 2; break;
+        case PAYMENT_METHOD: {
+            NSMutableArray *array = [loginDelegate paymentMethodArray];
+            rows = [array count];
+        } break;
+        case PAYMENT_AMOUNT: {
+            NSMutableArray *array = [loginDelegate billArray];
+            rows = [array count];
+        } break;
+        case PAYMENT_DATE: {
+            rows = 2;
+        } break;
     }
 
     return rows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
-//    static NSString *CellIdentifier = @"Cell";
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    // Configure the cell...
+    UITableViewCell *cell;
     
+    switch( [indexPath section] ) {
+        case PAYMENT_METHOD: {
+            PaymentMethodCell *pmc;
+            pmc = [tv dequeueReusableCellWithIdentifier:@"PaymentMethodCell"];
+
+            if( !pmc ) {
+                pmc = [[PaymentMethodCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:@"PaymentMethodCell"];
+            }
+            NSMutableArray *array = [loginDelegate paymentMethodArray];
+            PaymentMethod *meth = [array objectAtIndex:[indexPath row]];
+            pmc.accountNameLabel.text = [meth accountName];
+            pmc.accountDescriptionLabel.text = [meth accountDescription];
+            return pmc;
+        } break;
+        case PAYMENT_AMOUNT: {
+            cell = [tv dequeueReusableCellWithIdentifier:@"Cell"];
+
+            if( !cell ) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:@"Cell"];
+            }
+            [[cell textLabel] setText:@"Payment amount"];
+        } break;
+        case PAYMENT_DATE: {
+            cell = [tv dequeueReusableCellWithIdentifier:@"Cell"];
+
+            if( !cell ) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:@"Cell"];
+            }
+            [[cell textLabel] setText:@"Payment date"];
+        } break;
+    }    
     return cell;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSString *str;
+    switch( section ) {
+        case PAYMENT_METHOD: str = @"PaymentMethod"; break;
+        case PAYMENT_AMOUNT: str = @"Paymount Amount"; break;
+        case PAYMENT_DATE: str = @"Payment Date"; break;
+    }
+    return str;
+}
 
+#pragma mark - TableView Delegate methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat h = 0.0;
+    switch( [indexPath section] ) {
+        case PAYMENT_METHOD: h = 88.0; break;
+        case PAYMENT_AMOUNT: h = 66.0; break;
+        case PAYMENT_DATE: h = 44.0; break;
+    }
+    return h;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

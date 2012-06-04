@@ -19,16 +19,16 @@
 @synthesize loginHash;
 @synthesize customerServiceEmail;
 @synthesize assistanceMessage;
-@synthesize paymentMethodSet;
-@synthesize billSet;
+@synthesize paymentMethodArray;
+@synthesize billArray;
 
 
 -(id)init {
     self = [super init];
     MyLog( @"LoginDelegate init" );
     
-    paymentMethodSet = [[NSMutableSet alloc] init];
-    billSet = [[NSMutableSet alloc] init];
+    paymentMethodArray = [[NSMutableArray alloc] init];
+    billArray = [[NSMutableArray alloc] init];
     bills = [[Bills alloc] init];
     
     return self;
@@ -87,7 +87,7 @@
                 [paymentMethod setAccountName:[attributeDict objectForKey:key]];
             }
         }
-        [paymentMethodSet addObject:paymentMethod];
+        [paymentMethodArray addObject:paymentMethod];
         
     } else if( [elementName isEqualToString:@"Bills"] ) {
         MyLog( @"elementName: %@", elementName );
@@ -169,7 +169,7 @@
                 [bill setCurrentReading:str];
             }
         }
-        [billSet addObject:bill];
+        [billArray addObject:bill];
     } else {
         for( key in attributeDict ) {
             MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);            

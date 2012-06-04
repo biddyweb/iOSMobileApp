@@ -38,14 +38,18 @@
     // Load the cell with data
     NSString *v = [[vendorListResultDelegate objectAtIndex:[indexPath row]] Name];
     // MyLog( @"Vendor: %@", v );
+    [[cell textLabel] setNumberOfLines:2];
+    [[cell textLabel] setLineBreakMode:UILineBreakModeWordWrap];
     [[cell textLabel] setText:v];
     
     return cell;
 }
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     return [vendorListResultDelegate count];
 }
-
+- (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tv rowHeight] * 1.25;
+}
 #pragma mark - UITableViewDataSource (optional)
 
 #pragma mark - UITableViewDelegate

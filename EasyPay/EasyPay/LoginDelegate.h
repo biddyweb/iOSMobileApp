@@ -22,6 +22,6 @@
 @property(strong,nonatomic) NSString *customerServiceEmail;
 @property(nonatomic) BOOL errorMessage;
 @property(strong,nonatomic) NSString *assistanceMessage;
-@property(strong,nonatomic) NSMutableSet *paymentMethodSet;
-@property(strong,nonatomic) NSMutableSet *billSet;
+@property(strong,nonatomic) NSMutableArray *paymentMethodArray;
+@property(strong,nonatomic) NSMutableArray *billArray;
 @end
