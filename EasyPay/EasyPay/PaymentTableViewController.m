@@ -8,8 +8,10 @@
 
 #import "PaymentTableViewController.h"
 #import "PaymentMethodCell.h"
+#import "PaymentAmountCell.h"
 #import "LoginDelegate.h"
 #import "PaymentMethod.h"
+#import "Bill.h"
 
 
 #define PAYMENT_METHOD 0
@@ -68,7 +70,7 @@
         } break;
         case PAYMENT_AMOUNT: {
             NSMutableArray *array = [loginDelegate billArray];
-            rows = [array count];
+            rows = [array count] + 3;
         } break;
         case PAYMENT_DATE: {
             rows = 2;
@@ -80,7 +82,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
+    // MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
     UITableViewCell *cell;
     
     switch( [indexPath section] ) {
@@ -99,13 +101,42 @@
             return pmc;
         } break;
         case PAYMENT_AMOUNT: {
-            cell = [tv dequeueReusableCellWithIdentifier:@"Cell"];
+            PaymentAmountCell *pac;
+            pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
 
-            if( !cell ) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:@"Cell"];
+            if( !pac ) {
+                pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:@"PaymentAmountCell"];
             }
-            [[cell textLabel] setText:@"Payment amount"];
+            NSMutableArray *array = [loginDelegate billArray];
+            int row = [indexPath row];
+            int count = [array count];
+            if( row < count ) {
+                Bill *bill = [array objectAtIndex:[indexPath row]];
+                
+                UILabel *label = [pac accountNumberLabel];
+                [label setText:[bill accountNumberDisplay]];
+                label = [pac dueDateLabel];
+
+            } else if( row == count ) {
+                UILabel *label = [pac accountNumberLabel];
+                [label setText:@"Contribution"];
+                label = [pac totalLabel];
+                [label setText:@"$10.00"];
+                
+            } else if( row == count+1 ) {
+                UILabel *label = [pac accountNumberLabel];
+                [label setText:@"Fee"];
+                label = [pac totalLabel];
+                [label setText:@"$5.00"];
+                
+            } else if( row == count+2 ) {
+                UILabel *label = [pac accountNumberLabel];
+                [label setText:@"Total"];
+                label = [pac totalLabel];
+                [label setText:@"50.00"];
+            }
+            return pac;
         } break;
         case PAYMENT_DATE: {
             cell = [tv dequeueReusableCellWithIdentifier:@"Cell"];
@@ -134,7 +165,7 @@
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
         case PAYMENT_METHOD: h = 88.0; break;
-        case PAYMENT_AMOUNT: h = 66.0; break;
+        case PAYMENT_AMOUNT: h = 44.0; break;
         case PAYMENT_DATE: h = 44.0; break;
     }
     return h;

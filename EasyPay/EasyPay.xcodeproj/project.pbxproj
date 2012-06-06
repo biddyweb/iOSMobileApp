@@ -33,6 +33,7 @@
 		BA872D0E157B0DE200604FF8 /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0D157B0DE200604FF8 /* Bills.m */; };
 		BA872D10157B15E100604FF8 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0F157B15E100604FF8 /* util.m */; };
 		BA872D13157C147300604FF8 /* PaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D12157C147300604FF8 /* PaymentMethodCell.m */; };
+		BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,8 @@
 		BA872D0F157B15E100604FF8 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
 		BA872D11157C147300604FF8 /* PaymentMethodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentMethodCell.h; sourceTree = "<group>"; };
 		BA872D12157C147300604FF8 /* PaymentMethodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodCell.m; sourceTree = "<group>"; };
+		BACD5D24157DBA6700BAA5A5 /* PaymentAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentAmountCell.h; sourceTree = "<group>"; };
+		BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentAmountCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 				BA872D0F157B15E100604FF8 /* util.m */,
 				BA872D11157C147300604FF8 /* PaymentMethodCell.h */,
 				BA872D12157C147300604FF8 /* PaymentMethodCell.m */,
+				BACD5D24157DBA6700BAA5A5 /* PaymentAmountCell.h */,
+				BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				BA872D0E157B0DE200604FF8 /* Bills.m in Sources */,
 				BA872D10157B15E100604FF8 /* util.m in Sources */,
 				BA872D13157C147300604FF8 /* PaymentMethodCell.m in Sources */,
+				BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

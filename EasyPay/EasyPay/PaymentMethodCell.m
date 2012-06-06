@@ -36,14 +36,10 @@
     CGRect bounds = [[self contentView] bounds];
     CGFloat top = 2.0;
     
-    float h = bounds.size.height;
     float w = bounds.size.width;
-    MyLog( @"PaymentMethodCell h: %f  w: %f", h, w );
     
     UIFont *font = [accountNameLabel font];
-    CGFloat size = [font pointSize];
     CGFloat lineHeight = [font lineHeight];
-    MyLog( @"Font pointSize: %f lineHeight: %f", size, lineHeight );
     CGRect topFrame = CGRectMake( 5.0, top, w, lineHeight );
     
     top += lineHeight + 4;
@@ -51,7 +47,6 @@
     
     top += lineHeight + 4;
     CGRect botFrame = CGRectMake( 5.0, top, w, lineHeight );
-    MyLog( @"top of bottom frame: %f", top );
     
     [accountNameLabel setFrame:topFrame];
     [accountDescriptionLabel setFrame:midFrame];

@@ -134,10 +134,11 @@
     } else if( [elementName isEqualToString:@"Bill"] ) {
         MyLog( @"elementName: %@", elementName );
         Bill *bill = [[Bill alloc] init];
-        NSString *str = [attributeDict objectForKey:key];
 
         for( key in attributeDict ) {
-            MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);
+            NSString *str = [attributeDict objectForKey:key];
+
+            MyLog(@"Key: %@, Value: %@", key, str);
             
             if( [key isEqualToString:@"BalanceForward"] ) {
 
