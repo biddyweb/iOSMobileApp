@@ -9,6 +9,7 @@
 #import "PaymentTableViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
+#import "PaymentDateCell.h"
 #import "LoginDelegate.h"
 #import "PaymentMethod.h"
 #import "Bill.h"
@@ -73,7 +74,7 @@
             rows = [array count] + 3;
         } break;
         case PAYMENT_DATE: {
-            rows = 2;
+            rows = 1;
         } break;
     }
 
@@ -98,6 +99,7 @@
             PaymentMethod *meth = [array objectAtIndex:[indexPath row]];
             pmc.accountNameLabel.text = [meth accountName];
             pmc.accountDescriptionLabel.text = [meth accountDescription];
+            [[pmc ccvTextField] setDelegate:self];
             return pmc;
         } break;
         case PAYMENT_AMOUNT: {
@@ -116,36 +118,51 @@
                 
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:[bill accountNumberDisplay]];
+                
                 label = [pac dueDateLabel];
-
+                NSString *str = [bill dueDate];
+                NSArray *array = [str componentsSeparatedByString:@" "];
+                [label setText:[array objectAtIndex:0]];
+                
+                label = [pac totalLabel];
+                [label setText:[bill totalDueDisplay]];
             } else if( row == count ) {
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:@"Contribution"];
+                
+                label = [pac dueDateLabel];
+                [label setText:@""];
+                
                 label = [pac totalLabel];
                 [label setText:@"$10.00"];
-                
             } else if( row == count+1 ) {
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:@"Fee"];
+                
+                label = [pac dueDateLabel];
+                [label setText:@""];
+                
                 label = [pac totalLabel];
                 [label setText:@"$5.00"];
-                
             } else if( row == count+2 ) {
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:@"Total"];
+                
+                [[pac dueDateLabel] setText:@""];
+                
                 label = [pac totalLabel];
-                [label setText:@"50.00"];
+                [label setText:@"$50.00"];
             }
             return pac;
         } break;
         case PAYMENT_DATE: {
-            cell = [tv dequeueReusableCellWithIdentifier:@"Cell"];
+            PaymentDateCell *pdc = [tv dequeueReusableCellWithIdentifier:@"PaymentDateCell"];
 
             if( !cell ) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:@"Cell"];
+                pdc = [[PaymentDateCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:@"PaymentDateCell"];
             }
-            [[cell textLabel] setText:@"Payment date"];
+            return pdc;
         } break;
     }    
     return cell;
@@ -154,7 +171,7 @@
     NSString *str;
     switch( section ) {
         case PAYMENT_METHOD: str = @"PaymentMethod"; break;
-        case PAYMENT_AMOUNT: str = @"Paymount Amount"; break;
+        case PAYMENT_AMOUNT: str = @"Account     Due Date     Amount"; break;
         case PAYMENT_DATE: str = @"Payment Date"; break;
     }
     return str;
@@ -165,8 +182,8 @@
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
         case PAYMENT_METHOD: h = 88.0; break;
-        case PAYMENT_AMOUNT: h = 44.0; break;
-        case PAYMENT_DATE: h = 44.0; break;
+        case PAYMENT_AMOUNT: h = 30.0; break;
+        case PAYMENT_DATE: h = 216.0; break;
     }
     return h;
 }
@@ -220,6 +237,12 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+// handle the CCV UITextField
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

@@ -34,6 +34,8 @@
 		BA872D10157B15E100604FF8 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0F157B15E100604FF8 /* util.m */; };
 		BA872D13157C147300604FF8 /* PaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D12157C147300604FF8 /* PaymentMethodCell.m */; };
 		BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */; };
+		BACD5D2E15855CE400BAA5A5 /* PaymentDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */; };
+		BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,10 @@
 		BA872D12157C147300604FF8 /* PaymentMethodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodCell.m; sourceTree = "<group>"; };
 		BACD5D24157DBA6700BAA5A5 /* PaymentAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentAmountCell.h; sourceTree = "<group>"; };
 		BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentAmountCell.m; sourceTree = "<group>"; };
+		BACD5D2C15855CE300BAA5A5 /* PaymentDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDateCell.h; sourceTree = "<group>"; };
+		BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDateCell.m; sourceTree = "<group>"; };
+		BACD5D30158580B200BAA5A5 /* EditablePaymentAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditablePaymentAmountCell.h; sourceTree = "<group>"; };
+		BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditablePaymentAmountCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +176,10 @@
 				BA872D12157C147300604FF8 /* PaymentMethodCell.m */,
 				BACD5D24157DBA6700BAA5A5 /* PaymentAmountCell.h */,
 				BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */,
+				BACD5D2C15855CE300BAA5A5 /* PaymentDateCell.h */,
+				BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */,
+				BACD5D30158580B200BAA5A5 /* EditablePaymentAmountCell.h */,
+				BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -270,6 +280,8 @@
 				BA872D10157B15E100604FF8 /* util.m in Sources */,
 				BA872D13157C147300604FF8 /* PaymentMethodCell.m in Sources */,
 				BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */,
+				BACD5D2E15855CE400BAA5A5 /* PaymentDateCell.m in Sources */,
+				BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

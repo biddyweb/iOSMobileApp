@@ -11,7 +11,9 @@
 @implementation PaymentMethodCell
 @synthesize accountNameLabel;
 @synthesize accountDescriptionLabel;
-@synthesize otherLabel;
+@synthesize ccvLabel;
+@synthesize ccvTextField;
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -19,14 +21,22 @@
     if (self) {
         accountNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [accountNameLabel setText:@"first field"];
+        
         accountDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [accountDescriptionLabel setText:@"second field"];
-        otherLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [otherLabel setText:@"third field"];
+        
+        ccvLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [ccvLabel setText:@"CCV"];
+        
+        ccvTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        [ccvTextField setText:@""];
+        [ccvTextField setBorderStyle:UITextBorderStyleBezel];
+        [ccvTextField setClearButtonMode:UITextFieldViewModeAlways];
         
         [[self contentView] addSubview:accountNameLabel];
         [[self contentView] addSubview:accountDescriptionLabel];
-        [[self contentView] addSubview:otherLabel];
+        [[self contentView] addSubview:ccvLabel];
+        [[self contentView] addSubview:ccvTextField];
     }
     return self;
 }
@@ -46,11 +56,13 @@
     CGRect midFrame = CGRectMake( 5.0, top, w, lineHeight );
     
     top += lineHeight + 4;
-    CGRect botFrame = CGRectMake( 5.0, top, w, lineHeight );
-    
+    CGRect ccvFrame = CGRectMake( 5.0, top, 50.0, lineHeight+5 );
+    CGRect ccvTextFrame = CGRectMake( 55.0, top, 80.0, lineHeight+5 );
+
     [accountNameLabel setFrame:topFrame];
     [accountDescriptionLabel setFrame:midFrame];
-    [otherLabel setFrame:botFrame];
+    [ccvLabel setFrame:ccvFrame];
+    [ccvTextField setFrame:ccvTextFrame];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

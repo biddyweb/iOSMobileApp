@@ -10,6 +10,6 @@
 
 @class LoginDelegate;
 
-@interface PaymentTableViewController : UITableViewController
+@interface PaymentTableViewController : UITableViewController <UITextFieldDelegate>
 @property(strong,nonatomic) LoginDelegate *loginDelegate;
 @end
