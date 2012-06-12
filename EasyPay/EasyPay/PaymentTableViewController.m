@@ -9,6 +9,7 @@
 #import "PaymentTableViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
+#import "EditablePaymentAmountCell.h"
 #import "PaymentDateCell.h"
 #import "LoginDelegate.h"
 #import "PaymentMethod.h"
@@ -103,17 +104,16 @@
             return pmc;
         } break;
         case PAYMENT_AMOUNT: {
-            PaymentAmountCell *pac;
-            pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-
-            if( !pac ) {
-                pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:@"PaymentAmountCell"];
-            }
             NSMutableArray *array = [loginDelegate billArray];
             int row = [indexPath row];
             int count = [array count];
             if( row < count ) {
+                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
+                if( !pac ) {
+                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:@"PaymentAmountCell"];
+                }
+
                 Bill *bill = [array objectAtIndex:[indexPath row]];
                 
                 UILabel *label = [pac accountNumberLabel];
@@ -126,16 +126,28 @@
                 
                 label = [pac totalLabel];
                 [label setText:[bill totalDueDisplay]];
+                cell = pac;
             } else if( row == count ) {
-                UILabel *label = [pac accountNumberLabel];
+                EditablePaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"EditablePaymentAmountCell"];
+                if( !epac ) {
+                    epac = [[EditablePaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:@"EditablePaymentAmountCell"];
+                }
+                UILabel *label = [epac accountNumberLabel];
                 [label setText:@"Contribution"];
                 
-                label = [pac dueDateLabel];
+                label = [epac dueDateLabel];
                 [label setText:@""];
                 
-                label = [pac totalLabel];
-                [label setText:@"$10.00"];
+                UITextField *tf = [epac totalTextField];
+                [tf setText:@"$10.00"];
+                cell = epac;
             } else if( row == count+1 ) {
+                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
+                if( !pac ) {
+                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:@"PaymentAmountCell"];
+                }
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:@"Fee"];
                 
@@ -144,7 +156,13 @@
                 
                 label = [pac totalLabel];
                 [label setText:@"$5.00"];
+                cell = pac;
             } else if( row == count+2 ) {
+                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
+                if( !pac ) {
+                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:@"PaymentAmountCell"];
+                }
                 UILabel *label = [pac accountNumberLabel];
                 [label setText:@"Total"];
                 
@@ -152,8 +170,8 @@
                 
                 label = [pac totalLabel];
                 [label setText:@"$50.00"];
+                cell = pac;
             }
-            return pac;
         } break;
         case PAYMENT_DATE: {
             PaymentDateCell *pdc = [tv dequeueReusableCellWithIdentifier:@"PaymentDateCell"];

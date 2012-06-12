@@ -21,10 +21,12 @@
         accountNumberLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [accountNumberLabel setText:@"ACCT:"];
         dueDateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [dueDateLabel setText:@"due date"];
+        [dueDateLabel setText:@""];
         totalTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        [totalTextField setText:@"total"];
-        
+        [totalTextField setText:@""];
+        [totalTextField setBorderStyle:UITextBorderStyleBezel];
+        [totalTextField setClearButtonMode:UITextFieldViewModeAlways];
+
         [[self contentView] addSubview:accountNumberLabel];
         [[self contentView] addSubview:dueDateLabel];
         [[self contentView] addSubview:totalTextField];
@@ -47,12 +49,12 @@
     left += w / 3.0;
     CGRect midFrame = CGRectMake( left, top, w / 3, lineHeight );
     
-    left += w / 3.0;
-    CGRect rightFrame = CGRectMake( left, top, w / 3, lineHeight );
-    
+    left += w / 3.0 - 15.0;
+    CGRect textFrame = CGRectMake( left, top, w / 3, lineHeight+5 );
+
     [accountNumberLabel setFrame:leftFrame];
     [dueDateLabel setFrame:midFrame];
-    [totalTextField setFrame:rightFrame];
+    [totalTextField setFrame:textFrame];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
