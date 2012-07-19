@@ -33,6 +33,9 @@
 		BA872D0E157B0DE200604FF8 /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0D157B0DE200604FF8 /* Bills.m */; };
 		BA872D10157B15E100604FF8 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D0F157B15E100604FF8 /* util.m */; };
 		BA872D13157C147300604FF8 /* PaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA872D12157C147300604FF8 /* PaymentMethodCell.m */; };
+		BA9E191315B7C40800FA4058 /* PaymentDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E191115B7C40700FA4058 /* PaymentDateViewController.m */; };
+		BA9E191415B7C40800FA4058 /* PaymentDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E191215B7C40700FA4058 /* PaymentDateViewController.xib */; };
+		BA9E191B15B7CD7600FA4058 /* PaymentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E191A15B7CD7600FA4058 /* PaymentButtonCell.m */; };
 		BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */; };
 		BACD5D2E15855CE400BAA5A5 /* PaymentDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */; };
 		BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */; };
@@ -84,6 +87,11 @@
 		BA872D0F157B15E100604FF8 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
 		BA872D11157C147300604FF8 /* PaymentMethodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentMethodCell.h; sourceTree = "<group>"; };
 		BA872D12157C147300604FF8 /* PaymentMethodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodCell.m; sourceTree = "<group>"; };
+		BA9E191015B7C40700FA4058 /* PaymentDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDateViewController.h; sourceTree = "<group>"; };
+		BA9E191115B7C40700FA4058 /* PaymentDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDateViewController.m; sourceTree = "<group>"; };
+		BA9E191215B7C40700FA4058 /* PaymentDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentDateViewController.xib; sourceTree = "<group>"; };
+		BA9E191915B7CD7600FA4058 /* PaymentButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentButtonCell.h; sourceTree = "<group>"; };
+		BA9E191A15B7CD7600FA4058 /* PaymentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentButtonCell.m; sourceTree = "<group>"; };
 		BACD5D24157DBA6700BAA5A5 /* PaymentAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentAmountCell.h; sourceTree = "<group>"; };
 		BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentAmountCell.m; sourceTree = "<group>"; };
 		BACD5D2C15855CE300BAA5A5 /* PaymentDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDateCell.h; sourceTree = "<group>"; };
@@ -180,6 +188,11 @@
 				BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */,
 				BACD5D30158580B200BAA5A5 /* EditablePaymentAmountCell.h */,
 				BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */,
+				BA9E191015B7C40700FA4058 /* PaymentDateViewController.h */,
+				BA9E191115B7C40700FA4058 /* PaymentDateViewController.m */,
+				BA9E191215B7C40700FA4058 /* PaymentDateViewController.xib */,
+				BA9E191915B7CD7600FA4058 /* PaymentButtonCell.h */,
+				BA9E191A15B7CD7600FA4058 /* PaymentButtonCell.m */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -251,6 +264,7 @@
 				BA56A7951555E1B600F671F8 /* WebViewController.xib in Resources */,
 				BA7C406715688D6B00819ED7 /* LoginViewController.xib in Resources */,
 				BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */,
+				BA9E191415B7C40800FA4058 /* PaymentDateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +296,8 @@
 				BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */,
 				BACD5D2E15855CE400BAA5A5 /* PaymentDateCell.m in Sources */,
 				BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */,
+				BA9E191315B7C40800FA4058 /* PaymentDateViewController.m in Sources */,
+				BA9E191B15B7CD7600FA4058 /* PaymentButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

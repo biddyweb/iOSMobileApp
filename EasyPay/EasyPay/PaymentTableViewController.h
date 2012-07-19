@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class LoginDelegate;
+@class PaymentDateViewController;
 
 @interface PaymentTableViewController : UITableViewController <UITextFieldDelegate>
 @property(strong,nonatomic) LoginDelegate *loginDelegate;

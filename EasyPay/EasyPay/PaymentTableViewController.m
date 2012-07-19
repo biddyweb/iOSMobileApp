@@ -7,10 +7,12 @@
 //
 
 #import "PaymentTableViewController.h"
+#import "PaymentDateViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
 #import "EditablePaymentAmountCell.h"
 #import "PaymentDateCell.h"
+#import "PaymentButtonCell.h"
 #import "LoginDelegate.h"
 #import "PaymentMethod.h"
 #import "Bill.h"
@@ -75,7 +77,7 @@
             rows = [array count] + 3;
         } break;
         case PAYMENT_DATE: {
-            rows = 1;
+            rows = 2;
         } break;
     }
 
@@ -86,7 +88,8 @@
 {
     // MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
     UITableViewCell *cell;
-    
+    int row = [indexPath row];
+
     switch( [indexPath section] ) {
         case PAYMENT_METHOD: {
             PaymentMethodCell *pmc;
@@ -105,7 +108,6 @@
         } break;
         case PAYMENT_AMOUNT: {
             NSMutableArray *array = [loginDelegate billArray];
-            int row = [indexPath row];
             int count = [array count];
             if( row < count ) {
                 PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
@@ -174,13 +176,20 @@
             }
         } break;
         case PAYMENT_DATE: {
-            PaymentDateCell *pdc = [tv dequeueReusableCellWithIdentifier:@"PaymentDateCell"];
-
-            if( !cell ) {
-                pdc = [[PaymentDateCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:@"PaymentDateCell"];
+            if( row == 0 ) {
+                UITableViewCell *cell = [[UITableViewCell alloc]
+                                         initWithStyle:UITableViewCellStyleDefault
+                                         reuseIdentifier:@"UITableViewCell"];
+                [[cell textLabel] setText:@"Payment Date"];
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                return cell;
+            } else if( row == 1 ) {
+                NSLog( @"create the PaymentButtonCell" );
+                PaymentButtonCell *cell = [[PaymentButtonCell alloc]
+                                           initWithStyle:UITableViewCellStyleDefault
+                                           reuseIdentifier:@"PaymentButtonCell"];
+                return cell;
             }
-            return pdc;
         } break;
     }    
     return cell;
@@ -199,9 +208,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
-        case PAYMENT_METHOD: h = 88.0; break;
-        case PAYMENT_AMOUNT: h = 30.0; break;
-        case PAYMENT_DATE: h = 216.0; break;
+    case PAYMENT_METHOD: h = 88.0; break;
+    case PAYMENT_AMOUNT: h = 30.0; break;
+    case PAYMENT_DATE: h = 44.0; break;
     }
     return h;
 }
@@ -248,6 +257,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog( @"didSelectRowAtIndexPath - section: %d - row: %d", [indexPath section], [indexPath row] );
+    if( [indexPath section] == PAYMENT_DATE ) {
+        if( [indexPath row] == 0 ) {
+            NSLog( @"change the date" );
+            PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
+            [[self navigationController] pushViewController:paymentDateViewController
+                                                   animated:YES];
+        } else if( [indexPath row] == 1 ) {
+            NSLog( @"make a payment" );
+        }
+    }
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
