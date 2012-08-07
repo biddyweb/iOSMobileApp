@@ -13,18 +13,20 @@
 @property BOOL visibleAccountNumber;
 @property BOOL visibleCurrentReading;
 @property BOOL visibleAmountToPayEntry;
+@property BOOL visibleCurrentDue;
+@property BOOL visibleTotalPaid;
+@property BOOL visibleBillCycle;
+@property BOOL visibleBalanceForward;
+@property BOOL visiblePreviousReading;
+
 @property float transactionFeeCreditCard;
 @property float transactionFeeEFT;
+@property BOOL transactionFeeEFTPercent;
+@property BOOL transactionFeeCreditCardPercent;
+
 @property BOOL paymentPending;
-@property BOOL visibleCurrentDue;
 @property BOOL inCollections;
 @property(strong,nonatomic) NSString *accountNumberName;
 @property(strong,nonatomic) NSString *latestAllowedScheduleDate;
-@property BOOL visibleTotalPaid;
-@property BOOL transactionFeeCreditCardPercent;
-@property BOOL visibleBillCycle;
-@property BOOL visibleBalanceForward;
-@property BOOL transactionFeeEFTPercent;
-@property BOOL visiblePreviousReading;
 
 @end

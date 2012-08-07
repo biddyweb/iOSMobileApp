@@ -16,7 +16,8 @@
     NSLog( @"PaymentButtonCell:initWithStyle" );
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        paymentButton = [[UIButton alloc] initWithFrame:CGRectZero];
+        paymentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [paymentButton setFrame:CGRectZero];
         [paymentButton setTitle:@"Make Payment" forState:UIControlStateNormal];
         
         [[self contentView] addSubview:paymentButton];
@@ -27,6 +28,10 @@
     [super layoutSubviews];
     CGRect bounds = [[self contentView] bounds];
     NSLog( @"paymentButtonCell bounds: %f, %f %f X %f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height );
+    bounds.origin.x += 4;
+    bounds.origin.y += 2;
+    bounds.size.width -= 8;
+    bounds.size.height -= 4;
     [paymentButton setFrame:bounds];
 }
 

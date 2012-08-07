@@ -180,6 +180,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [vendorLabel setText:vendorString];
+    [usernameTextField setText:@""];
+    [passwordTextField setText:@""];
 }
 - (void)viewDidLoad
 {

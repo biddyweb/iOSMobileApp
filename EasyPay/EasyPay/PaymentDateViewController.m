@@ -16,7 +16,13 @@
 @synthesize dateLabel;
 @synthesize datePicker;
 @synthesize doneButton;
+@synthesize date;
+@synthesize dateString;
 
+
+-(void)setDate:(NSDate *)d {
+    date = d;
+}
 -(IBAction)doneButton:(id)sender {
     NSLog( @"date Picker done" );
     [[self navigationController] popViewControllerAnimated:YES];
@@ -30,6 +36,12 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    MyLog( @"date: %@", [date description] );
+    [datePicker setDate:date animated:YES];
+    [dateLabel setText:dateString];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

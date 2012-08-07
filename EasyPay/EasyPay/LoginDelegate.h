@@ -14,7 +14,6 @@
     NSMutableString *xmlCharacters;
     BOOL faultDetected;
     NSString *ID;
-    Bills *bills;
 }
 @property(strong,nonatomic) NSString *loginHash;
 @property(strong,nonatomic) NSString *customerNumber;
@@ -24,4 +23,5 @@
 @property(strong,nonatomic) NSString *assistanceMessage;
 @property(strong,nonatomic) NSMutableArray *paymentMethodArray;
 @property(strong,nonatomic) NSMutableArray *billArray;
+@property(strong,nonatomic) Bills *bills;
 @end

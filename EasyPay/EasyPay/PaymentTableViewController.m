@@ -16,6 +16,7 @@
 #import "LoginDelegate.h"
 #import "PaymentMethod.h"
 #import "Bill.h"
+#import "Bills.h"
 
 
 #define PAYMENT_METHOD 0
@@ -26,11 +27,15 @@
 @implementation PaymentTableViewController
 @synthesize loginDelegate;
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        transactionFee = FALSE;
+        contribution = FALSE;
+        contributionRow = 0;
+        transactionFeeRow = 0;
     }
     return self;
 }
@@ -74,7 +79,24 @@
         } break;
         case PAYMENT_AMOUNT: {
             NSMutableArray *array = [loginDelegate billArray];
-            rows = [array count] + 3;
+            rows = [array count];   // plus 1 for the total
+            Bills *bills = [loginDelegate bills];
+            if( [bills maximumContribution] > 0.0 ) {
+                contribution = TRUE;
+                contributionRow = rows;
+                rows++;
+            }
+            if( [bills transactionFeeCreditCard] > 0.0
+               || [bills transactionFeeEFT] > 0.0
+               || [bills transactionFeeEFTPercent] > 0.0
+               || [bills transactionFeeCreditCardPercent] > 0.0 ) {
+                transactionFee = TRUE;
+                transactionFeeRow = rows;
+                rows++;
+            }
+            totalRow = rows;
+            rows++;
+            MyLog( @"%d rows in PAYMENT_AMOUNT: c: %d tr: %d to: %d", rows, contributionRow, transactionFeeRow, totalRow );
         } break;
         case PAYMENT_DATE: {
             rows = 2;
@@ -86,7 +108,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
+    MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
     UITableViewCell *cell;
     int row = [indexPath row];
 
@@ -129,65 +151,84 @@
                 label = [pac totalLabel];
                 [label setText:[bill totalDueDisplay]];
                 cell = pac;
-            } else if( row == count ) {
-                EditablePaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"EditablePaymentAmountCell"];
-                if( !epac ) {
-                    epac = [[EditablePaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:@"EditablePaymentAmountCell"];
+            } else if( row >= count ) {
+                if( row == contributionRow ) {
+                    MyLog( @"contributionRow: %d", contributionRow );
+                    EditablePaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"EditablePaymentAmountCell"];
+                    if( !epac ) {
+                        epac = [[EditablePaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                       reuseIdentifier:@"EditablePaymentAmountCell"];
+                    }
+                    UILabel *label = [epac accountNumberLabel];
+                    [label setText:@"Contribution"];
+                    
+                    label = [epac dueDateLabel];
+                    [label setText:@""];
+                    
+                    UITextField *tf = [epac totalTextField];
+                    [tf setText:@"$10.00"];
+                    cell = epac;
+                } else if( row == transactionFeeRow ) {
+                    MyLog( @"transactionFeeRow: %d", transactionFeeRow );
+                    PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
+                    if( !pac ) {
+                        pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                       reuseIdentifier:@"PaymentAmountCell"];
+                    }
+                    UILabel *label = [pac accountNumberLabel];
+                    [label setText:@"Fee"];
+                    
+                    label = [pac dueDateLabel];
+                    [label setText:@""];
+                    
+                    label = [pac totalLabel];
+                    [label setText:@"$5.00"];
+                    cell = pac;
+                } else if( row == totalRow ) {
+                    MyLog( @"totalRow: %d", totalRow );
+                    float total = 0.0;
+                    for( Bill *b in array ) {
+                        total += [b totalDue];
+                    }
+
+                    PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
+                    if( !pac ) {
+                        pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                       reuseIdentifier:@"PaymentAmountCell"];
+                    }
+                    UILabel *label = [pac accountNumberLabel];
+                    [label setText:@"Total"];
+                    
+                    [[pac dueDateLabel] setText:@""];
+                    
+                    label = [pac totalLabel];
+                    [label setText:[NSString stringWithFormat:@"$%.2f", total]];
+                    cell = pac;
+                } else {
+                    MyLog( @"some other row" );
                 }
-                UILabel *label = [epac accountNumberLabel];
-                [label setText:@"Contribution"];
-                
-                label = [epac dueDateLabel];
-                [label setText:@""];
-                
-                UITextField *tf = [epac totalTextField];
-                [tf setText:@"$10.00"];
-                cell = epac;
-            } else if( row == count+1 ) {
-                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                if( !pac ) {
-                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:@"PaymentAmountCell"];
-                }
-                UILabel *label = [pac accountNumberLabel];
-                [label setText:@"Fee"];
-                
-                label = [pac dueDateLabel];
-                [label setText:@""];
-                
-                label = [pac totalLabel];
-                [label setText:@"$5.00"];
-                cell = pac;
-            } else if( row == count+2 ) {
-                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                if( !pac ) {
-                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:@"PaymentAmountCell"];
-                }
-                UILabel *label = [pac accountNumberLabel];
-                [label setText:@"Total"];
-                
-                [[pac dueDateLabel] setText:@""];
-                
-                label = [pac totalLabel];
-                [label setText:@"$50.00"];
-                cell = pac;
             }
         } break;
         case PAYMENT_DATE: {
             if( row == 0 ) {
+                NSMutableArray *array = [loginDelegate billArray];
+                Bill *bill = [array objectAtIndex:[indexPath row]];
+
+                NSString *str = [bill dueDate];
+                NSArray *tmp = [str componentsSeparatedByString:@" "];
+                str = [NSString stringWithFormat:@"%@ %@", @"Payment date: ", [tmp objectAtIndex:0]];
+                
                 UITableViewCell *cell = [[UITableViewCell alloc]
                                          initWithStyle:UITableViewCellStyleDefault
                                          reuseIdentifier:@"UITableViewCell"];
-                [[cell textLabel] setText:@"Payment Date"];
+                [[cell textLabel] setText:str];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                 return cell;
             } else if( row == 1 ) {
-                NSLog( @"create the PaymentButtonCell" );
-                PaymentButtonCell *cell = [[PaymentButtonCell alloc]
+                UITableViewCell *cell = [[UITableViewCell alloc]
                                            initWithStyle:UITableViewCellStyleDefault
-                                           reuseIdentifier:@"PaymentButtonCell"];
+                                           reuseIdentifier:@"UITableViewCell"];
+                [[cell textLabel] setText:@"Make Payment"];
                 return cell;
             }
         } break;
@@ -198,7 +239,7 @@
     NSString *str;
     switch( section ) {
         case PAYMENT_METHOD: str = @"PaymentMethod"; break;
-        case PAYMENT_AMOUNT: str = @"Account     Due Date     Amount"; break;
+        case PAYMENT_AMOUNT: str = @"Account     Due Date          Amount"; break;
         case PAYMENT_DATE: str = @"Payment Date"; break;
     }
     return str;
@@ -261,7 +302,20 @@
     if( [indexPath section] == PAYMENT_DATE ) {
         if( [indexPath row] == 0 ) {
             NSLog( @"change the date" );
+            NSMutableArray *array = [loginDelegate billArray];
+            Bill *bill = [array objectAtIndex:[indexPath row]];
+            NSDateFormatter *df = [[NSDateFormatter alloc] init];
+            [df setDateFormat:@"MM/dd/yyyy hh:mm:ss a"];
+            NSDate *d = [df dateFromString:[bill dueDate]];
+
+            MyLog( @"date string %@ and date %@", [bill dueDate], [d description] );
+            
             PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
+            [paymentDateViewController setDate:d];
+            NSString *str = [bill dueDate];
+            NSArray *tmp = [str componentsSeparatedByString:@" "];
+            [paymentDateViewController setDateString:[tmp objectAtIndex:0]];
+            
             [[self navigationController] pushViewController:paymentDateViewController
                                                    animated:YES];
         } else if( [indexPath row] == 1 ) {

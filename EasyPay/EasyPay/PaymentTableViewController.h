@@ -11,6 +11,12 @@
 @class LoginDelegate;
 @class PaymentDateViewController;
 
-@interface PaymentTableViewController : UITableViewController <UITextFieldDelegate>
+@interface PaymentTableViewController : UITableViewController <UITextFieldDelegate> {
+    BOOL transactionFee;
+    BOOL contribution;
+    int transactionFeeRow;
+    int contributionRow;
+    int totalRow;
+}
 @property(strong,nonatomic) LoginDelegate *loginDelegate;
 @end

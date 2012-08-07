@@ -24,6 +24,7 @@
         [dueDateLabel setText:@"due date"];
         totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [totalLabel setText:@"total"];
+        [totalLabel setTextAlignment:UITextAlignmentRight];
         
         [[self contentView] addSubview:accountNumberLabel];
         [[self contentView] addSubview:dueDateLabel];
@@ -48,7 +49,7 @@
     CGRect midFrame = CGRectMake( left, top, w / 3, lineHeight );
     
     left += w / 3.0;
-    CGRect rightFrame = CGRectMake( left, top, w / 3, lineHeight );
+    CGRect rightFrame = CGRectMake( left, top, w / 3 - 20, lineHeight );
     
     [accountNumberLabel setFrame:leftFrame];
     [dueDateLabel setFrame:midFrame];

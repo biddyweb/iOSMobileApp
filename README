@@ -69,3 +69,50 @@ To get a new copy of the repo:
 
 	git clone git://github.com/LTI/iOSMobileApp
 
+------------------------------------------------------------------------
+ 
+
+So, once the list comes up, the user should be able to select the vendor,
+and see the login screen.  The login screen should show the selected
+vendor, and allow the user to change to a different vendor.  It should
+also have a text field for the username and password, plus a “login”
+button.
+
+If the user has previously selected a vendor, please store that choice,
+so that they will immediately see the login screen the next time they
+open the app.  Let me know if that makes sense.
+
+The webservice function for validating the login is here:
+
+https://mobile.autopayments.com/MobileClientRsc/MobileClientRsc.asmx?op=ValidateLogin
+
+You can see that four things are needed:   the vendorId, username and
+password, and the applicationVersion.  The VendorId should be the
+encrypted ID that is passed back from the VendorList function.  The
+username and password will be whatever the member enters in (I’ll get you
+a demo one in this email).  The applicationVersion should be 3.0.0.
+
+The function returns a hash value that will be needed for all future
+calls to the webservice.  This hash value is the validated login
+information, and expires after a certain amount of time.  If the login
+fails, an “ErrorMessage”, and in some cases, an “AssistanceMessage” will
+be returned and can be displayed to the user.  If the login succeeds,
+the XML will also contain a lot of additional data, including the payment
+method list, and the list of “bills” – which should include account numbers,
+due dates, bill dates and the amount due for each account.  Once you are
+successfully getting this data back, I can walk you through building the
+payment screen, which should appear after the login screen.
+
+You’ll want to select “Demo Account 2” for the vendor.  The username and
+password can be reset and setup to whatever you like by using the
+following link:
+
+https://demo2.autopayments.com/Login/LoginAll.aspx
+
+Choose the “Reset Demo” button at the top, and the use the “Don’t have
+an account?  Register here!” link to fillout the username and password
+to use.
+
+Let me know if you have any questions or problems.
+
+

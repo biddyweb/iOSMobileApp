@@ -21,6 +21,7 @@
 @synthesize assistanceMessage;
 @synthesize paymentMethodArray;
 @synthesize billArray;
+@synthesize bills;
 
 
 -(id)init {
@@ -103,32 +104,32 @@
                 [bills setVisibleCurrentReading:string2BOOL( tmp )];
             } else if( [key isEqualToString:@"VisibleAmountToPayEntry"] ) {
                 [bills setVisibleAmountToPayEntry:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleCurrentDue"] ) {
+                [bills setVisibleCurrentDue:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleTotalPaid"] ) {
+                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleBillCycle"] ) {
+                [bills setVisibleBillCycle:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisibleBalanceForward"] ) {
+                [bills setVisibleBalanceForward:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"VisiblePreviousReading"] ) {
+                [bills setVisiblePreviousReading:string2BOOL( tmp )];
             } else if( [key isEqualToString:@"TransactionFeeCreditCard"] ) {
                 [bills setTransactionFeeCreditCard:[tmp floatValue]];
             } else if( [key isEqualToString:@"TransactionFeeEFT"] ) {
                 [bills setTransactionFeeEFT:[tmp floatValue]];
+            } else if( [key isEqualToString:@"TransactionFeeCreditCardPercent"] ) {
+                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
+            } else if( [key isEqualToString:@"TransactionFeeEFTPercent"] ) {
+                [bills setTransactionFeeEFTPercent:string2BOOL( tmp )];
             } else if( [key isEqualToString:@"PaymentPending"] ) {
                 [bills setPaymentPending:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"VisibleCurrentDue"] ) {
-                [bills setVisibleCurrentDue:string2BOOL( tmp )];
             } else if( [key isEqualToString:@"InCollections"] ) {
                 [bills setInCollections:string2BOOL( tmp )];
             } else if( [key isEqualToString:@"AccountNumberName"] ) {
                 [bills setAccountNumberName:tmp];
             } else if( [key isEqualToString:@"LatestAllowedScheduleDate"] ) {
                 [bills setLatestAllowedScheduleDate:tmp];
-            } else if( [key isEqualToString:@"VisibleTotalPaid"] ) {
-                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"TransactionFeeCreditCardPercent"] ) {
-                [bills setTransactionFeeCreditCardPercent:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"VisibleBillCycle"] ) {
-                [bills setVisibleBillCycle:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"VisibleBalanceForward"] ) {
-                [bills setVisibleBalanceForward:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"TransactionFeeEFTPercent"] ) {
-                [bills setTransactionFeeEFTPercent:string2BOOL( tmp )];
-            } else if( [key isEqualToString:@"VisiblePreviousReading"] ) {
-                [bills setVisiblePreviousReading:string2BOOL( tmp )];
             }
         }
     } else if( [elementName isEqualToString:@"Bill"] ) {
