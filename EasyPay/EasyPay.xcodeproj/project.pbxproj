@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA4EAD9B15D8C30400DC377F /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4EAD9915D8C30300DC377F /* ReceiptViewController.m */; };
+		BA4EAD9C15D8C30400DC377F /* ReceiptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA4EAD9A15D8C30400DC377F /* ReceiptViewController.xib */; };
+		BA4EADA015D8C7A600DC377F /* MakePaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4EAD9E15D8C7A600DC377F /* MakePaymentViewController.m */; };
+		BA4EADA115D8C7A600DC377F /* MakePaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA4EAD9F15D8C7A600DC377F /* MakePaymentViewController.xib */; };
+		BA4EADAA15DB609B00DC377F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4EADA915DB609B00DC377F /* MessageUI.framework */; };
 		BA56A75F155586F400F671F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A75E155586F400F671F8 /* UIKit.framework */; };
 		BA56A761155586F400F671F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A760155586F400F671F8 /* Foundation.framework */; };
 		BA56A763155586F400F671F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA56A762155586F400F671F8 /* CoreGraphics.framework */; };
@@ -42,6 +47,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA4EAD9815D8C30300DC377F /* ReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptViewController.h; sourceTree = "<group>"; };
+		BA4EAD9915D8C30300DC377F /* ReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptViewController.m; sourceTree = "<group>"; };
+		BA4EAD9A15D8C30400DC377F /* ReceiptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptViewController.xib; sourceTree = "<group>"; };
+		BA4EAD9D15D8C7A600DC377F /* MakePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePaymentViewController.h; sourceTree = "<group>"; };
+		BA4EAD9E15D8C7A600DC377F /* MakePaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePaymentViewController.m; sourceTree = "<group>"; };
+		BA4EAD9F15D8C7A600DC377F /* MakePaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakePaymentViewController.xib; sourceTree = "<group>"; };
+		BA4EADA915DB609B00DC377F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		BA56A75A155586F400F671F8 /* EasyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA56A75E155586F400F671F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BA56A760155586F400F671F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -105,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA4EADAA15DB609B00DC377F /* MessageUI.framework in Frameworks */,
 				BA56A75F155586F400F671F8 /* UIKit.framework in Frameworks */,
 				BA56A761155586F400F671F8 /* Foundation.framework in Frameworks */,
 				BA56A763155586F400F671F8 /* CoreGraphics.framework in Frameworks */,
@@ -117,6 +130,7 @@
 		BA56A74F155586F300F671F8 = {
 			isa = PBXGroup;
 			children = (
+				BA4EADA915DB609B00DC377F /* MessageUI.framework */,
 				BA56A764155586F400F671F8 /* EasyPay */,
 				BA56A75D155586F400F671F8 /* Frameworks */,
 				BA56A75B155586F400F671F8 /* Products */,
@@ -144,9 +158,9 @@
 		BA56A764155586F400F671F8 /* EasyPay */ = {
 			isa = PBXGroup;
 			children = (
+				BA56A765155586F400F671F8 /* Supporting Files */,
 				BA56A76D155586F400F671F8 /* KGDAppDelegate.h */,
 				BA56A76E155586F400F671F8 /* KGDAppDelegate.m */,
-				BA56A765155586F400F671F8 /* Supporting Files */,
 				BA56A7841555B9A800F671F8 /* IndexViewController.h */,
 				BA56A7851555B9A800F671F8 /* IndexViewController.m */,
 				BA56A7861555B9A800F671F8 /* IndexViewController.xib */,
@@ -193,6 +207,12 @@
 				BA9E191215B7C40700FA4058 /* PaymentDateViewController.xib */,
 				BA9E191915B7CD7600FA4058 /* PaymentButtonCell.h */,
 				BA9E191A15B7CD7600FA4058 /* PaymentButtonCell.m */,
+				BA4EAD9815D8C30300DC377F /* ReceiptViewController.h */,
+				BA4EAD9915D8C30300DC377F /* ReceiptViewController.m */,
+				BA4EAD9A15D8C30400DC377F /* ReceiptViewController.xib */,
+				BA4EAD9D15D8C7A600DC377F /* MakePaymentViewController.h */,
+				BA4EAD9E15D8C7A600DC377F /* MakePaymentViewController.m */,
+				BA4EAD9F15D8C7A600DC377F /* MakePaymentViewController.xib */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -265,6 +285,8 @@
 				BA7C406715688D6B00819ED7 /* LoginViewController.xib in Resources */,
 				BA872CD8156BD49E00604FF8 /* TextViewController.xib in Resources */,
 				BA9E191415B7C40800FA4058 /* PaymentDateViewController.xib in Resources */,
+				BA4EAD9C15D8C30400DC377F /* ReceiptViewController.xib in Resources */,
+				BA4EADA115D8C7A600DC377F /* MakePaymentViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +320,8 @@
 				BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */,
 				BA9E191315B7C40800FA4058 /* PaymentDateViewController.m in Sources */,
 				BA9E191B15B7CD7600FA4058 /* PaymentButtonCell.m in Sources */,
+				BA4EAD9B15D8C30400DC377F /* ReceiptViewController.m in Sources */,
+				BA4EADA015D8C7A600DC377F /* MakePaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
