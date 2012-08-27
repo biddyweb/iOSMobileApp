@@ -9,6 +9,7 @@
 #import "PaymentTableViewController.h"
 #import "PaymentDateViewController.h"
 #import "MakePaymentViewController.h"
+#import "DefaultPaymentMethodViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
 #import "EditablePaymentAmountCell.h"
@@ -306,7 +307,10 @@
                                                    animated:YES];
         }
     } else if( [indexPath section] == PAYMENT_METHOD ) {
-        
+        DefaultPaymentMethodViewController *defaultPaymentMethodViewController =
+        [[DefaultPaymentMethodViewController alloc] init];
+        [[self navigationController] pushViewController:defaultPaymentMethodViewController
+                                               animated:YES];
     }
     // Navigation logic may go here. Create and push another view controller.
     /*
