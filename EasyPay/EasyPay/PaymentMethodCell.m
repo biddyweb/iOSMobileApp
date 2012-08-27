@@ -9,6 +9,7 @@
 #import "PaymentMethodCell.h"
 
 @implementation PaymentMethodCell
+@synthesize defaultMethod;
 @synthesize accountNameLabel;
 @synthesize accountDescriptionLabel;
 @synthesize ccvLabel;
@@ -19,6 +20,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        defaultMethod = [[UILabel alloc] init];
+        
         accountNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [accountNameLabel setText:@"first field"];
         
@@ -33,6 +36,7 @@
         [ccvTextField setBorderStyle:UITextBorderStyleBezel];
         [ccvTextField setClearButtonMode:UITextFieldViewModeAlways];
         
+        [[self contentView] addSubview:defaultMethod];
         [[self contentView] addSubview:accountNameLabel];
         [[self contentView] addSubview:accountDescriptionLabel];
         [[self contentView] addSubview:ccvLabel];
@@ -50,7 +54,8 @@
     
     UIFont *font = [accountNameLabel font];
     CGFloat lineHeight = [font lineHeight];
-    CGRect topFrame = CGRectMake( 5.0, top, w, lineHeight );
+    CGRect topFrame = CGRectMake( 35.0, top, w-30.0, lineHeight );
+    CGRect topLeftFrame = CGRectMake( 5.0, top, 30.0, lineHeight );
     
     top += lineHeight + 4;
     CGRect midFrame = CGRectMake( 5.0, top, w, lineHeight );
@@ -59,6 +64,7 @@
     CGRect ccvFrame = CGRectMake( 5.0, top, 50.0, lineHeight+5 );
     CGRect ccvTextFrame = CGRectMake( 55.0, top, 80.0, lineHeight+5 );
 
+    [defaultMethod setFrame:topLeftFrame];
     [accountNameLabel setFrame:topFrame];
     [accountDescriptionLabel setFrame:midFrame];
     [ccvLabel setFrame:ccvFrame];

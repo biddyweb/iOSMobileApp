@@ -7,12 +7,20 @@
 //
 
 #import "MakePaymentViewController.h"
+#import "ReceiptViewController.h"
+
 
 @interface MakePaymentViewController ()
 
 @end
 
 @implementation MakePaymentViewController
+
+-(IBAction)confirmButtonAction:(id)sender {
+    ReceiptViewController *receiptViewController = [[ReceiptViewController alloc] init];
+    [[self navigationController] pushViewController:receiptViewController
+                                           animated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

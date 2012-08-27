@@ -8,6 +8,7 @@
 
 #import "PaymentTableViewController.h"
 #import "PaymentDateViewController.h"
+#import "MakePaymentViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
 #import "EditablePaymentAmountCell.h"
@@ -21,7 +22,6 @@
 
 #define PAYMENT_METHOD 0
 #define PAYMENT_AMOUNT 1
-#define PAYMENT_DATE 2
 
 
 @implementation PaymentTableViewController
@@ -66,7 +66,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -96,10 +96,9 @@
             }
             totalRow = rows;
             rows++;
+            makePaymentRow = rows;
+            rows++;
             MyLog( @"%d rows in PAYMENT_AMOUNT: c: %d tr: %d to: %d", rows, contributionRow, transactionFeeRow, totalRow );
-        } break;
-        case PAYMENT_DATE: {
-            rows = 2;
         } break;
     }
 
@@ -123,9 +122,16 @@
             }
             NSMutableArray *array = [loginDelegate paymentMethodArray];
             PaymentMethod *meth = [array objectAtIndex:[indexPath row]];
+            if( [meth defaultMethod] == TRUE ) {
+                pmc.defaultMethod.text = @"\u2611";
+            } else {
+                pmc.defaultMethod.text = @"\u2610";
+            }
             pmc.accountNameLabel.text = [meth accountName];
             pmc.accountDescriptionLabel.text = [meth accountDescription];
             [[pmc ccvTextField] setDelegate:self];
+            //[pmc setAccessoryType:UITableViewCellAccessoryCheckmark];
+
             return pmc;
         } break;
         case PAYMENT_AMOUNT: {
@@ -150,6 +156,8 @@
                 
                 label = [pac totalLabel];
                 [label setText:[bill totalDueDisplay]];
+                [pac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+
                 cell = pac;
             } else if( row >= count ) {
                 if( row == contributionRow ) {
@@ -204,32 +212,13 @@
                     label = [pac totalLabel];
                     [label setText:[NSString stringWithFormat:@"$%.2f", total]];
                     cell = pac;
+                } else if( row == makePaymentRow ) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                  reuseIdentifier:@"UITableViewCell"];
+                    [[cell textLabel] setText:@"Make Payment"];
                 } else {
                     MyLog( @"some other row" );
                 }
-            }
-        } break;
-        case PAYMENT_DATE: {
-            if( row == 0 ) {
-                NSMutableArray *array = [loginDelegate billArray];
-                Bill *bill = [array objectAtIndex:[indexPath row]];
-
-                NSString *str = [bill dueDate];
-                NSArray *tmp = [str componentsSeparatedByString:@" "];
-                str = [NSString stringWithFormat:@"%@ %@", @"Payment date: ", [tmp objectAtIndex:0]];
-                
-                UITableViewCell *cell = [[UITableViewCell alloc]
-                                         initWithStyle:UITableViewCellStyleDefault
-                                         reuseIdentifier:@"UITableViewCell"];
-                [[cell textLabel] setText:str];
-                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                return cell;
-            } else if( row == 1 ) {
-                UITableViewCell *cell = [[UITableViewCell alloc]
-                                           initWithStyle:UITableViewCellStyleDefault
-                                           reuseIdentifier:@"UITableViewCell"];
-                [[cell textLabel] setText:@"Make Payment"];
-                return cell;
             }
         } break;
     }    
@@ -239,8 +228,7 @@
     NSString *str;
     switch( section ) {
         case PAYMENT_METHOD: str = @"PaymentMethod"; break;
-        case PAYMENT_AMOUNT: str = @"Account     Due Date          Amount"; break;
-        case PAYMENT_DATE: str = @"Payment Date"; break;
+        case PAYMENT_AMOUNT: str = @"Account    Due Date         Amount"; break;
     }
     return str;
 }
@@ -250,8 +238,7 @@
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
     case PAYMENT_METHOD: h = 88.0; break;
-    case PAYMENT_AMOUNT: h = 30.0; break;
-    case PAYMENT_DATE: h = 44.0; break;
+    case PAYMENT_AMOUNT: h = 32.0; break;
     }
     return h;
 }
@@ -298,29 +285,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog( @"didSelectRowAtIndexPath - section: %d - row: %d", [indexPath section], [indexPath row] );
-    if( [indexPath section] == PAYMENT_DATE ) {
-        if( [indexPath row] == 0 ) {
-            NSLog( @"change the date" );
-            NSMutableArray *array = [loginDelegate billArray];
-            Bill *bill = [array objectAtIndex:[indexPath row]];
+    int row = [indexPath row];
+    NSLog( @"didSelectRowAtIndexPath - section: %d - row: %d", [indexPath section], row );
+    if( [indexPath section] == PAYMENT_AMOUNT ) {            
+        NSArray *array = [loginDelegate billArray];
+        if( row < [array count] ) {
+            Bill *bill = [array objectAtIndex:row];
             NSDateFormatter *df = [[NSDateFormatter alloc] init];
             [df setDateFormat:@"MM/dd/yyyy hh:mm:ss a"];
             NSDate *d = [df dateFromString:[bill dueDate]];
 
-            MyLog( @"date string %@ and date %@", [bill dueDate], [d description] );
-            
             PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
             [paymentDateViewController setDate:d];
-            NSString *str = [bill dueDate];
-            NSArray *tmp = [str componentsSeparatedByString:@" "];
-            [paymentDateViewController setDateString:[tmp objectAtIndex:0]];
-            
+            [paymentDateViewController setAmount:[bill totalDue]];
             [[self navigationController] pushViewController:paymentDateViewController
                                                    animated:YES];
-        } else if( [indexPath row] == 1 ) {
-            NSLog( @"make a payment" );
+        } else if( row == makePaymentRow ) {
+            MakePaymentViewController *makePaymentViewController = [[MakePaymentViewController alloc] init];
+            [[self navigationController] pushViewController:makePaymentViewController
+                                                   animated:YES];
         }
+    } else if( [indexPath section] == PAYMENT_METHOD ) {
+        
     }
     // Navigation logic may go here. Create and push another view controller.
     /*

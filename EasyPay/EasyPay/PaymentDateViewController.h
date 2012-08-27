@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PaymentDateViewController : UIViewController
+@interface PaymentDateViewController : UIViewController <UITextFieldDelegate>
 @property(strong, nonatomic) NSDate *date;
 @property(strong, nonatomic) NSString *dateString;
 @property(strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property(strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property(strong, nonatomic) UIButton *doneButton;
+@property(strong, nonatomic) IBOutlet UITextField *amountTextField;
+@property(nonatomic) float amount;
 -(IBAction) doneButton:(id)sender;
--(void)setDate:(NSDate *)d;
 @end

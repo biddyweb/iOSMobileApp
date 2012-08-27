@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PaymentMethodCell : UITableViewCell
+@property(strong,nonatomic) UILabel *defaultMethod;
 @property(strong,nonatomic) UILabel *accountNameLabel;
 @property(strong,nonatomic) UILabel *accountDescriptionLabel;
 @property(strong,nonatomic) UILabel *ccvLabel;

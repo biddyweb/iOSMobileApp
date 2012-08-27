@@ -116,7 +116,9 @@
 
 #pragma mark - Connection delegate
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    MyLog( @"didReceiveData" );
+//    NSString* newStr = [[NSString alloc] initWithData:data
+//                                             encoding:NSUTF8StringEncoding];
+//    MyLog( @"didReceiveData %@", newStr );
     [xmlData appendData:data];
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {

@@ -48,6 +48,18 @@
 
 
 -(void)validateLogin {
+    NSString *usernameString = [usernameTextField text];
+    NSString *passwordString = [passwordTextField text];
+    if( [usernameString length] == 0 || [passwordString length] == 0 ) {
+        NSMutableString *msg = [[NSMutableString alloc] init];
+        [msg appendString:@"Login failed; "];
+        [msg appendString:@"username and/or password are blank"];
+
+        [errorLabel setText:msg];
+        [errorLabel setHidden:NO];
+        return;
+    }
+    
     NSString *msg = [NSString stringWithFormat:
                      @"<?xml version='1.0' encoding='utf-8'?>\n"
                      @"<soap:Envelope"
@@ -63,8 +75,8 @@
                      @"</ValidateLogin>"
                      @"</soap:Body>"
                      @"</soap:Envelope>", vendorIDString,
-                     [usernameTextField text],
-                     [passwordTextField text]];
+                     usernameString,
+                     passwordString];
 
     NSURL *url = [NSURL URLWithString:
                   @"https://mobile.autopayments.com/"
@@ -84,7 +96,9 @@
     [req setHTTPBody:[msg dataUsingEncoding:NSUTF8StringEncoding]];
 
     MyLog( @"validateLogin: %@", msg );
-    
+    xmlData = NULL;
+    xmlData = [[NSMutableData alloc] init];
+
     if( connectionInProgress ) {
         [connectionInProgress cancel];
     }
@@ -97,7 +111,7 @@
 
 #pragma mark - Connection delegate
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    MyLog( @"LoginViewController - didReceiveData" );
+    //MyLog( @"LoginViewController - didReceiveData" );
     [xmlData appendData:data];
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -137,14 +151,19 @@
         }
         [errorLabel setText:msg];
         [errorLabel setHidden:NO];
+        
+        // Login failed, so we can expect another poke at the the password field.
+        // leave the username alone, although it might be wrong too.
+        [passwordTextField setText:@""];
     } else {
-        MyLog( @"login was successful" );
+        [errorLabel setHidden:YES];
+
+        //MyLog( @"login was successful" );
         PaymentTableViewController *paymentTableViewController = [[PaymentTableViewController alloc] init];
         [paymentTableViewController setLoginDelegate:loginDelegate];
         [[self navigationController] pushViewController:paymentTableViewController
                                                animated:YES];
-        MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
-        [errorLabel setHidden:YES];
+        //MyLog( @"validateLogin: %@", [validateLoginResultDelegate validateLoginResultString] );
     }
     
     //    [activityIndicatorView stopAnimating];
@@ -173,7 +192,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        xmlData = [[NSMutableData alloc] init];
     }
     return self;
 }
@@ -186,7 +204,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    MyLog( @"LoginViewController - viewDidLoad" );
+//    MyLog( @"LoginViewController - viewDidLoad" );
     UIScrollView *sc = (UIScrollView *)self.view;
     float width = sc.bounds.size.width;
     float height = self.passwordTextField.frame.origin.y + self.passwordTextField.frame.size.height + 20.0;

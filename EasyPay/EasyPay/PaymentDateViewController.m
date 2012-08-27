@@ -18,7 +18,14 @@
 @synthesize doneButton;
 @synthesize date;
 @synthesize dateString;
+@synthesize amountTextField;
+@synthesize amount;
 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
 
 -(void)setDate:(NSDate *)d {
     date = d;

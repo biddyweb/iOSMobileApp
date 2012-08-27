@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface ReceiptViewController : UIViewController
-
+@interface ReceiptViewController : UIViewController <MFMailComposeViewControllerDelegate>
+@property(strong, nonatomic) MFMailComposeViewController *mfMailComposeViewController;
+-(IBAction)emailButtonAction:(id)sender;
+-(IBAction)doneButtonAction:(id)sender;
 @end

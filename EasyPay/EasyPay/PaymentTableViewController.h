@@ -17,6 +17,7 @@
     int transactionFeeRow;
     int contributionRow;
     int totalRow;
+    int makePaymentRow;
 }
 @property(strong,nonatomic) LoginDelegate *loginDelegate;
 @end

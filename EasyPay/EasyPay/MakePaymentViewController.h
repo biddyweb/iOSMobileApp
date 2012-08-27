@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MakePaymentViewController : UIViewController
-
+-(IBAction)confirmButtonAction:(id)sender;
 @end
