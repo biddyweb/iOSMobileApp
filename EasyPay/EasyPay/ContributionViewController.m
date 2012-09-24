@@ -7,12 +7,21 @@
 //
 
 #import "ContributionViewController.h"
-
-@interface ContributionViewController ()
-
-@end
+#import "LoginDelegate.h"
 
 @implementation ContributionViewController
+@synthesize loginDelegate;
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog( @"got the contribution %@", [textField text] );
+    return YES;
+}
+
+
+-(IBAction)doneButton:(id)sender {
+    MyLog( @"doneButton" );
+    [[self navigationController] popViewControllerAnimated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

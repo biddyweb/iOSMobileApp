@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LoginDelegate;
 
 @interface PaymentDateViewController : UIViewController <UITextFieldDelegate>
 @property(strong, nonatomic) NSDate *date;
@@ -15,6 +16,8 @@
 @property(strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property(strong, nonatomic) UIButton *doneButton;
 @property(strong, nonatomic) IBOutlet UITextField *amountTextField;
-@property(nonatomic) float amount;
+@property(strong, nonatomic) LoginDelegate *loginDelegate;
+@property(nonatomic) int billIndex;
+
 -(IBAction) doneButton:(id)sender;
 @end

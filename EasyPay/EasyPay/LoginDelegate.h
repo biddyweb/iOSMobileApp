@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class Bills;
 @class Bill;
+@class PaymentMethod;
 
 @interface LoginDelegate : NSObject <NSXMLParserDelegate> {
     NSMutableString *xmlCharacters;
@@ -21,6 +22,7 @@
 @property(strong,nonatomic) NSString *customerServiceEmail;
 @property(nonatomic) BOOL errorMessage;
 @property(strong,nonatomic) NSString *assistanceMessage;
+@property(strong,nonatomic) PaymentMethod *defaultPaymentMethod;
 @property(strong,nonatomic) NSMutableArray *paymentMethodArray;
 @property(strong,nonatomic) NSMutableArray *billArray;
 @property(strong,nonatomic) Bills *bills;

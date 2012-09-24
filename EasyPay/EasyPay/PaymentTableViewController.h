@@ -11,13 +11,26 @@
 @class LoginDelegate;
 @class PaymentDateViewController;
 
-@interface PaymentTableViewController : UITableViewController <UITextFieldDelegate> {
+@interface PaymentTableViewController : UITableViewController <NSXMLParserDelegate> {
     BOOL transactionFee;
     BOOL contribution;
+    float contributionAmount;
     int transactionFeeRow;
     int contributionRow;
     int totalRow;
     int makePaymentRow;
+    
+    NSMutableData *xmlData;
+    NSMutableString *xmlCharacters;
 }
 @property(strong,nonatomic) LoginDelegate *loginDelegate;
+@property(strong, nonatomic) NSURLConnection *connectionInProgress;
+@property(nonatomic) float transactionFeeAmount;
+
+-(void)calculateTransactionFeeFor:(float)amountPaid
+               contributionAmount:(float)contributionAmount
+                   discountAmount:(float)discountAmount
+                       businessId:(int)businessId
+                  paymentMethodId:(int)paymentMethodId;
+
 @end

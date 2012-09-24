@@ -20,6 +20,7 @@
 @synthesize customerServiceEmail;
 @synthesize assistanceMessage;
 @synthesize paymentMethodArray;
+@synthesize defaultPaymentMethod;
 @synthesize billArray;
 @synthesize bills;
 

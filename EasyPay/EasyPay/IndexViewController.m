@@ -86,13 +86,13 @@
     
     /*
     NSURL *url = [NSURL URLWithString:
-                  @"https://mobile.autopayments.com/"
-                  @"MobileClientRsc/MobileClientRsc.asmx"
+                  @"https://mobile.autopayments.com"
+                  @"/MobileClientRsc/MobileClientRsc.asmx"
                   @"?WSDL"];
     */
     NSURL *url = [NSURL URLWithString:
-                  @"https://mobile.autopayments.com/"
-                  @"MobileClientRsc/MobileClientRsc.asmx"];
+                  @"https://mobile.autopayments.com"
+                  @"/MobileClientRsc/MobileClientRsc.asmx"];
     
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
                                                        cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -125,22 +125,7 @@
 //    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
 //                                               encoding:NSUTF8StringEncoding];
 //    MyLog( @"xmlCheck = %@", xmlCheck );
-    
-    
-    
-    //    NSRange range = [xmlCheck rangeOfString:@"<html>"];
-    //    if( range.length ) {    // maybe this is html - so display it.
-    //        MyLog( @"<html> at %d and %d characters long", range.location, range.length );
-    //        
-    //        if( !webViewController ) {
-    //            webViewController = [[WebViewController alloc] init];
-    //        }
-    //        [[self navigationController] pushViewController:webViewController
-    //                                               animated:YES];
-    //        [webViewController setPage:xmlCheck];
-    //    }
 
-    
     // Parse the xml...
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
     vendorListDelegate = [[VendorListDelegate alloc] init];

@@ -12,8 +12,6 @@
 @synthesize defaultMethod;
 @synthesize accountNameLabel;
 @synthesize accountDescriptionLabel;
-@synthesize ccvLabel;
-@synthesize ccvTextField;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -27,20 +25,10 @@
         
         accountDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [accountDescriptionLabel setText:@"second field"];
-        
-        ccvLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [ccvLabel setText:@"CCV"];
-        
-        ccvTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        [ccvTextField setText:@""];
-        [ccvTextField setBorderStyle:UITextBorderStyleBezel];
-        [ccvTextField setClearButtonMode:UITextFieldViewModeAlways];
-        
+                
         [[self contentView] addSubview:defaultMethod];
         [[self contentView] addSubview:accountNameLabel];
         [[self contentView] addSubview:accountDescriptionLabel];
-        [[self contentView] addSubview:ccvLabel];
-        [[self contentView] addSubview:ccvTextField];
     }
     return self;
 }
@@ -60,15 +48,9 @@
     top += lineHeight + 4;
     CGRect midFrame = CGRectMake( 5.0, top, w, lineHeight );
     
-    top += lineHeight + 4;
-    CGRect ccvFrame = CGRectMake( 5.0, top, 50.0, lineHeight+5 );
-    CGRect ccvTextFrame = CGRectMake( 55.0, top, 80.0, lineHeight+5 );
-
     [defaultMethod setFrame:topLeftFrame];
     [accountNameLabel setFrame:topFrame];
     [accountDescriptionLabel setFrame:midFrame];
-    [ccvLabel setFrame:ccvFrame];
-    [ccvTextField setFrame:ccvTextFrame];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

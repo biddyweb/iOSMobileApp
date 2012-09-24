@@ -10,6 +10,7 @@
 #import "PaymentDateViewController.h"
 #import "MakePaymentViewController.h"
 #import "DefaultPaymentMethodViewController.h"
+#import "ContributionViewController.h"
 #import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
 #import "EditablePaymentAmountCell.h"
@@ -19,6 +20,7 @@
 #import "PaymentMethod.h"
 #import "Bill.h"
 #import "Bills.h"
+#import "util.h"
 
 
 #define PAYMENT_METHOD 0
@@ -27,6 +29,8 @@
 
 @implementation PaymentTableViewController
 @synthesize loginDelegate;
+@synthesize connectionInProgress;
+@synthesize transactionFeeAmount;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -57,6 +61,10 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -125,12 +133,12 @@
             PaymentMethod *meth = [array objectAtIndex:[indexPath row]];
             if( [meth defaultMethod] == TRUE ) {
                 pmc.defaultMethod.text = @"\u2611";
+                [loginDelegate setDefaultPaymentMethod:meth];
             } else {
                 pmc.defaultMethod.text = @"\u2610";
             }
             pmc.accountNameLabel.text = [meth accountName];
             pmc.accountDescriptionLabel.text = [meth accountDescription];
-            [[pmc ccvTextField] setDelegate:self];
             //[pmc setAccessoryType:UITableViewCellAccessoryCheckmark];
 
             return pmc;
@@ -156,7 +164,7 @@
                 [label setText:[array objectAtIndex:0]];
                 
                 label = [pac totalLabel];
-                [label setText:[bill totalDueDisplay]];
+                [label setText:[NSString stringWithFormat:@"$%.2f", [bill totalDue]]];
                 [pac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 
                 cell = pac;
@@ -216,7 +224,12 @@
                 } else if( row == makePaymentRow ) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                   reuseIdentifier:@"UITableViewCell"];
-                    [[cell textLabel] setText:@"Make Payment"];
+                    Bills *bills = [loginDelegate bills];
+                    if( [bills paymentPending] ) {
+                        [[cell textLabel] setText:@"Payment Pending"];
+                    } else {
+                        [[cell textLabel] setText:@"Make Payment"];
+                    }
                 } else {
                     MyLog( @"some other row" );
                 }
@@ -239,51 +252,13 @@
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
     case PAYMENT_METHOD: h = 88.0; break;
-    case PAYMENT_AMOUNT: h = 32.0; break;
+    case PAYMENT_AMOUNT: h = 44.0; break;
     }
     return h;
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
@@ -297,14 +272,24 @@
             NSDate *d = [df dateFromString:[bill dueDate]];
 
             PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
+            [paymentDateViewController setLoginDelegate:loginDelegate];
             [paymentDateViewController setDate:d];
-            [paymentDateViewController setAmount:[bill totalDue]];
+            [paymentDateViewController setBillIndex:row];
             [[self navigationController] pushViewController:paymentDateViewController
                                                    animated:YES];
-        } else if( row == makePaymentRow ) {
-            MakePaymentViewController *makePaymentViewController = [[MakePaymentViewController alloc] init];
-            [[self navigationController] pushViewController:makePaymentViewController
+        } else if( row == contributionRow ) {
+            ContributionViewController *contributionViewController = [[ContributionViewController alloc] init];
+            [contributionViewController setLoginDelegate:loginDelegate];
+            [[self navigationController] pushViewController:contributionViewController
                                                    animated:YES];
+        } else if( row == makePaymentRow ) {
+            Bills *bills = [loginDelegate bills];
+            if( ![bills paymentPending] ) {
+                MakePaymentViewController *makePaymentViewController = [[MakePaymentViewController alloc] init];
+                [makePaymentViewController setLoginDelegate:loginDelegate];
+                [[self navigationController] pushViewController:makePaymentViewController
+                                                       animated:YES];
+            }
         }
     } else if( [indexPath section] == PAYMENT_METHOD ) {
         DefaultPaymentMethodViewController *defaultPaymentMethodViewController =
@@ -312,19 +297,154 @@
         [[self navigationController] pushViewController:defaultPaymentMethodViewController
                                                animated:YES];
     }
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
-// handle the CCV UITextField
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
+
+/*
+ POST /MobileClientRsc/MobileClientRsc.asmx HTTP/1.1
+ Host: mobile.autopayments.com
+ Content-Type: text/xml; charset=utf-8
+ Content-Length: length
+ SOAPAction: "http://autopayments.com/CalculateTransactionFee"
+ 
+ <CalculateTransactionFee xmlns="http://autopayments.com/">
+ <amountPaid>decimal</amountPaid>
+ <contributionAmount>decimal</contributionAmount>
+ <discountAmount>decimal</discountAmount>
+ <businessId>long</businessId>
+ <paymentMethodId>long</paymentMethodId>
+ </CalculateTransactionFee>
+ */
+
+#pragma mark - CalculateTransactionFee support
+
+-(void)calculateTransactionFeeFor:(float)amountPaid
+               contributionAmount:(float)contribAmount
+                   discountAmount:(float)discountAmount
+                       businessId:(int)businessId
+                  paymentMethodId:(int)paymentMethodId {
+    NSMutableString *msg = [[NSMutableString alloc] init];
+    
+    [msg appendString:@"<?xml version='1.0' encoding='utf-8'?>"
+     @"<soap:Envelope"
+     @" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'"
+     @" xmlns:xsd='http://www.w3.org/2001/XMLSchema'"
+     @" xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
+     @"<soap:Body>"
+     @"<CalculateTransactionFee xmlns='http://autopayments.com/'>"];
+    [msg appendString:floatField( @"amountPaid", amountPaid ) ];
+    [msg appendString:floatField( @"contributionAmount", contribAmount ) ];
+    [msg appendString:floatField( @"discountAmount", discountAmount ) ];
+    [msg appendString:intField( @"businessId", businessId ) ];
+    [msg appendString:intField( @"paymentMethodId", paymentMethodId ) ];
+    
+    [msg appendString:@"</CalculateTransactionFee>"
+     @"</soap:Body>"
+     @"</soap:Envelope>"];
+    
+    NSURL *url = [NSURL URLWithString:
+                  @"https://mobile.autopayments.com"
+                  @"/MobileClientRsc/MobileClientRsc.asmx"];
+    
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
+                                                       cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                   timeoutInterval:30];
+    NSString *msgLength = [NSString stringWithFormat:@"%d", [msg length]];
+    
+    [req addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [req addValue:msgLength forHTTPHeaderField:@"Content-Length"];
+    [req setHTTPMethod:@"POST"];
+    [req setHTTPBody:[msg dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    xmlData = [[NSMutableData alloc] init];
+    
+    if( connectionInProgress ) {
+        [connectionInProgress cancel];
+    }
+    connectionInProgress = [[NSURLConnection alloc] initWithRequest:req
+                                                           delegate:self
+                                                   startImmediately:YES];
+    MyLog( @"connection started" );
+}
+/* The following implement the connection call backs. */
+
+#pragma mark - Connection delegate
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSString* newStr = [[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding];
+    MyLog( @"didReceiveData %@", newStr );
+    
+    [xmlData appendData:data];
+}
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    //    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
+    //                                               encoding:NSUTF8StringEncoding];
+    //    MyLog( @"xmlCheck = %@", xmlCheck );
+    
+    
+    
+    //    NSRange range = [xmlCheck rangeOfString:@"<html>"];
+    //    if( range.length ) {    // maybe this is html - so display it.
+    //        MyLog( @"<html> at %d and %d characters long", range.location, range.length );
+    //        
+    //        if( !webViewController ) {
+    //            webViewController = [[WebViewController alloc] init];
+    //        }
+    //        [[self navigationController] pushViewController:webViewController
+    //                                               animated:YES];
+    //        [webViewController setPage:xmlCheck];
+    //    }
+    
+    
+    // Parse the xml...
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
+    [parser setDelegate:self];
+    [parser parse];
+    
+}
+
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    connectionInProgress = nil;
+    xmlData = nil;
+    
+    //    NSString *errorString = [NSString stringWithFormat:@"Fetch failed: %@",
+    //                             [error localizedDescription]];
+    //    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:errorString
+    //                                                             delegate:nil
+    //                                                    cancelButtonTitle:@"OK"
+    //                                               destructiveButtonTitle:nil
+    //                                                    otherButtonTitles:nil];
+    //    [actionSheet showInView:[[self view] window]];
+    //    [activityIndicatorView stopAnimating];
+}
+
+
+/*
+ * The following messages constitute the xml parser call backs; the joy of SAX.
+ */
+#pragma mark - NSXMLParserDelegate
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qualifiedName
+    attributes:(NSDictionary *)attributeDict {
+    xmlCharacters = [[NSMutableString alloc] init];
+    
+    //    MyLog( @"didStartElement: %@", elementName );
+    //    NSString *key;
+    //    for(key in attributeDict){
+    //        MyLog(@"Key: %@, Value %@", key, [attributeDict objectForKey: key]);
+    //    }
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName {
+    //    MyLog( @"didEndElement: %@", elementName );
+    if( [elementName isEqualToString:@"CalculateTransactionFeeResult"] ) {
+        transactionFee = [xmlCharacters floatValue];
+    }
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    [xmlCharacters appendString:string];    // only used for the VendorListResult tag
 }
 
 @end

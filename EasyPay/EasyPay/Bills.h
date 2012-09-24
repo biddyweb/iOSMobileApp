@@ -10,6 +10,8 @@
 
 @interface Bills : NSObject
 @property float maximumContribution;
+@property float contribution;
+
 @property BOOL visibleAccountNumber;
 @property BOOL visibleCurrentReading;
 @property BOOL visibleAmountToPayEntry;

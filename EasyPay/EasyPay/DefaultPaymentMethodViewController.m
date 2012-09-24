@@ -8,9 +8,6 @@
 
 #import "DefaultPaymentMethodViewController.h"
 
-@interface DefaultPaymentMethodViewController ()
-
-@end
 
 @implementation DefaultPaymentMethodViewController
 -(IBAction)makeDefault:(id)sender {

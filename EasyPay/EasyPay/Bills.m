@@ -10,6 +10,7 @@
 
 @implementation Bills
 @synthesize maximumContribution;
+@synthesize contribution;
 @synthesize visibleAccountNumber;
 @synthesize visibleCurrentReading;
 @synthesize visibleAmountToPayEntry;

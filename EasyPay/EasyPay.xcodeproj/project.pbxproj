@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA01781D160577A2004C5841 /* ContributionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA01781B160577A2004C5841 /* ContributionViewController.m */; };
+		BA01781E160577A2004C5841 /* ContributionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA01781C160577A2004C5841 /* ContributionViewController.xib */; };
 		BA4EAD9B15D8C30400DC377F /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4EAD9915D8C30300DC377F /* ReceiptViewController.m */; };
 		BA4EAD9C15D8C30400DC377F /* ReceiptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA4EAD9A15D8C30400DC377F /* ReceiptViewController.xib */; };
 		BA4EADA015D8C7A600DC377F /* MakePaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4EAD9E15D8C7A600DC377F /* MakePaymentViewController.m */; };
@@ -44,9 +46,15 @@
 		BACD5D26157DBA6700BAA5A5 /* PaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D25157DBA6700BAA5A5 /* PaymentAmountCell.m */; };
 		BACD5D2E15855CE400BAA5A5 /* PaymentDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */; };
 		BACD5D32158580B200BAA5A5 /* EditablePaymentAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */; };
+		BAD845E515EB252000809473 /* DefaultPaymentMethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD845E315EB251E00809473 /* DefaultPaymentMethodViewController.m */; };
+		BAD845E615EB252000809473 /* DefaultPaymentMethodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAD845E415EB251F00809473 /* DefaultPaymentMethodViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA01781A160577A2004C5841 /* ContributionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContributionViewController.h; sourceTree = "<group>"; };
+		BA01781B160577A2004C5841 /* ContributionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContributionViewController.m; sourceTree = "<group>"; };
+		BA01781C160577A2004C5841 /* ContributionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContributionViewController.xib; sourceTree = "<group>"; };
+		BA16978B160E9F2D00F986B1 /* util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		BA4EAD9815D8C30300DC377F /* ReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptViewController.h; sourceTree = "<group>"; };
 		BA4EAD9915D8C30300DC377F /* ReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptViewController.m; sourceTree = "<group>"; };
 		BA4EAD9A15D8C30400DC377F /* ReceiptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptViewController.xib; sourceTree = "<group>"; };
@@ -110,6 +118,9 @@
 		BACD5D2D15855CE400BAA5A5 /* PaymentDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDateCell.m; sourceTree = "<group>"; };
 		BACD5D30158580B200BAA5A5 /* EditablePaymentAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditablePaymentAmountCell.h; sourceTree = "<group>"; };
 		BACD5D31158580B200BAA5A5 /* EditablePaymentAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditablePaymentAmountCell.m; sourceTree = "<group>"; };
+		BAD845E215EB251D00809473 /* DefaultPaymentMethodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultPaymentMethodViewController.h; sourceTree = "<group>"; };
+		BAD845E315EB251E00809473 /* DefaultPaymentMethodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultPaymentMethodViewController.m; sourceTree = "<group>"; };
+		BAD845E415EB251F00809473 /* DefaultPaymentMethodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultPaymentMethodViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +204,7 @@
 				BA872D0A157B0BED00604FF8 /* Bill.m */,
 				BA872D0C157B0DE200604FF8 /* Bills.h */,
 				BA872D0D157B0DE200604FF8 /* Bills.m */,
+				BA16978B160E9F2D00F986B1 /* util.h */,
 				BA872D0F157B15E100604FF8 /* util.m */,
 				BA872D11157C147300604FF8 /* PaymentMethodCell.h */,
 				BA872D12157C147300604FF8 /* PaymentMethodCell.m */,
@@ -213,6 +225,12 @@
 				BA4EAD9D15D8C7A600DC377F /* MakePaymentViewController.h */,
 				BA4EAD9E15D8C7A600DC377F /* MakePaymentViewController.m */,
 				BA4EAD9F15D8C7A600DC377F /* MakePaymentViewController.xib */,
+				BAD845E215EB251D00809473 /* DefaultPaymentMethodViewController.h */,
+				BAD845E315EB251E00809473 /* DefaultPaymentMethodViewController.m */,
+				BAD845E415EB251F00809473 /* DefaultPaymentMethodViewController.xib */,
+				BA01781A160577A2004C5841 /* ContributionViewController.h */,
+				BA01781B160577A2004C5841 /* ContributionViewController.m */,
+				BA01781C160577A2004C5841 /* ContributionViewController.xib */,
 			);
 			path = EasyPay;
 			sourceTree = "<group>";
@@ -287,6 +305,8 @@
 				BA9E191415B7C40800FA4058 /* PaymentDateViewController.xib in Resources */,
 				BA4EAD9C15D8C30400DC377F /* ReceiptViewController.xib in Resources */,
 				BA4EADA115D8C7A600DC377F /* MakePaymentViewController.xib in Resources */,
+				BAD845E615EB252000809473 /* DefaultPaymentMethodViewController.xib in Resources */,
+				BA01781E160577A2004C5841 /* ContributionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +342,8 @@
 				BA9E191B15B7CD7600FA4058 /* PaymentButtonCell.m in Sources */,
 				BA4EAD9B15D8C30400DC377F /* ReceiptViewController.m in Sources */,
 				BA4EADA015D8C7A600DC377F /* MakePaymentViewController.m in Sources */,
+				BAD845E515EB252000809473 /* DefaultPaymentMethodViewController.m in Sources */,
+				BA01781D160577A2004C5841 /* ContributionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

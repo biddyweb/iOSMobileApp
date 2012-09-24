@@ -9,6 +9,10 @@
 #ifndef EasyPay_util_h
 #define EasyPay_util_h
 
+BOOL string2BOOL( NSString *str );
 
+NSString *intField( NSString *name, int value );
+NSString *floatField( NSString *name, float value );
+NSString *stringField( NSString *name, NSString *value );
 
 #endif

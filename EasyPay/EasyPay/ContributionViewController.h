@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LoginDelegate;
 
-@interface ContributionViewController : UIViewController
+@interface ContributionViewController : UIViewController <UITextFieldDelegate>
+@property (strong,nonatomic) LoginDelegate *loginDelegate;
+
+-(IBAction) doneButton:(id)sender;
 
 @end

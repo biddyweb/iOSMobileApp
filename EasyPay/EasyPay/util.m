@@ -14,3 +14,18 @@ BOOL string2BOOL( NSString *str ) {
     }
     return FALSE;
 }
+
+NSString *stringField( NSString *name, NSString *value ) {
+    return [NSString stringWithFormat:@"<%@>%@</%@>",
+            name, value, name];
+}
+
+NSString *intField( NSString *name, int value ) {
+    return [NSString stringWithFormat:@"<%@>%d</%@>",
+            name, value, name];
+}
+
+NSString *floatField( NSString *name, float value ) {
+    return [NSString stringWithFormat:@"<%@>%g</%@>",
+            name, value, name];
+}
