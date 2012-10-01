@@ -170,11 +170,12 @@
                 cell = pac;
             } else if( row >= count ) {
                 if( row == contributionRow ) {
-                    MyLog( @"contributionRow: %d", contributionRow );
-                    EditablePaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"EditablePaymentAmountCell"];
+                    Bills *bills = [loginDelegate bills];
+                    
+                    PaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
                     if( !epac ) {
-                        epac = [[EditablePaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                       reuseIdentifier:@"EditablePaymentAmountCell"];
+                        epac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                        reuseIdentifier:@"PaymentAmountCell"];
                     }
                     UILabel *label = [epac accountNumberLabel];
                     [label setText:@"Contribution"];
@@ -182,11 +183,15 @@
                     label = [epac dueDateLabel];
                     [label setText:@""];
                     
-                    UITextField *tf = [epac totalTextField];
-                    [tf setText:@"$10.00"];
+                    label = [epac totalLabel];
+                    NSString *str = [NSString stringWithFormat:@"%.2f", [bills contribution] ];
+                    [label setText:str];
+                    [epac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+
                     cell = epac;
                 } else if( row == transactionFeeRow ) {
-                    MyLog( @"transactionFeeRow: %d", transactionFeeRow );
+                    Bills *bills = [loginDelegate bills];
+
                     PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
                     if( !pac ) {
                         pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -199,15 +204,22 @@
                     [label setText:@""];
                     
                     label = [pac totalLabel];
-                    [label setText:@"$5.00"];
+                    [label setText:@""];
                     cell = pac;
                 } else if( row == totalRow ) {
-                    MyLog( @"totalRow: %d", totalRow );
+                    Bills *bills = [loginDelegate bills];
+
                     float total = 0.0;
                     for( Bill *b in array ) {
                         total += [b totalDue];
                     }
-
+                    if( contributionRow ) {
+                        total += [bills contribution];
+                    }
+                    if( transactionFeeRow ) {
+                        total += [bills transactionFee];
+                    }
+                    
                     PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
                     if( !pac ) {
                         pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -251,8 +263,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat h = 0.0;
     switch( [indexPath section] ) {
-    case PAYMENT_METHOD: h = 88.0; break;
-    case PAYMENT_AMOUNT: h = 44.0; break;
+    case PAYMENT_METHOD: h = [PaymentMethodCell cellHeight]; break;
+    case PAYMENT_AMOUNT: h = [PaymentAmountCell cellHeight]; break;
     }
     return h;
 }
@@ -292,10 +304,15 @@
             }
         }
     } else if( [indexPath section] == PAYMENT_METHOD ) {
-        DefaultPaymentMethodViewController *defaultPaymentMethodViewController =
-        [[DefaultPaymentMethodViewController alloc] init];
-        [[self navigationController] pushViewController:defaultPaymentMethodViewController
-                                               animated:YES];
+        NSMutableArray *array = [loginDelegate paymentMethodArray];
+        if( [array count] > 1 ) {   // only if more than one method
+            DefaultPaymentMethodViewController *defaultPaymentMethodViewController =
+            [[DefaultPaymentMethodViewController alloc] init];
+            [defaultPaymentMethodViewController setPaymentMethodIndex:[indexPath row]];
+            [defaultPaymentMethodViewController setLoginDelegate:loginDelegate];
+            [[self navigationController] pushViewController:defaultPaymentMethodViewController
+                                                   animated:YES];
+        }
     }
 }
 

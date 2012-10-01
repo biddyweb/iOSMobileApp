@@ -27,5 +27,5 @@
 @synthesize visibleBalanceForward;
 @synthesize transactionFeeEFTPercent;
 @synthesize visiblePreviousReading;
-
+@synthesize transactionFee;
 @end

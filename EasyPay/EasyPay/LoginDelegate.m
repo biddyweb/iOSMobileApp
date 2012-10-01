@@ -83,6 +83,8 @@
                 [paymentMethod setDefaultMethod:string2BOOL( [attributeDict objectForKey:key] ) ];
             } else if( [key isEqualToString:@"ShowCCV"] ) {
                 [paymentMethod setShowCCV:string2BOOL( [attributeDict objectForKey:key] )];
+            } else if( [key isEqualToString:@"isACH"] ) {
+                [paymentMethod setIsACH:string2BOOL( [attributeDict objectForKey:key] )];
             } else if( [key isEqualToString:@"PaymentMethodID"] ) {
                 [paymentMethod setPaymentMethodID:[attributeDict objectForKey:key]];
             } else if( [key isEqualToString:@"AccountName"] ) {

@@ -12,4 +12,7 @@
 @property(strong,nonatomic) UILabel *accountNumberLabel;
 @property(strong,nonatomic) UILabel *dueDateLabel;
 @property(strong,nonatomic) UILabel *totalLabel;
+
++ (int)cellHeight;
+
 @end

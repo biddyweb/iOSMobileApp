@@ -12,6 +12,7 @@
 @synthesize accountDescription;
 @synthesize defaultMethod;
 @synthesize showCCV;
+@synthesize isACH;
 @synthesize paymentMethodID;
 @synthesize accountName;
 

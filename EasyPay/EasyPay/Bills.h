@@ -25,6 +25,7 @@
 @property float transactionFeeEFT;
 @property BOOL transactionFeeEFTPercent;
 @property BOOL transactionFeeCreditCardPercent;
+@property float transactionFee;
 
 @property BOOL paymentPending;
 @property BOOL inCollections;

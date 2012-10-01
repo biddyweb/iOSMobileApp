@@ -12,6 +12,7 @@
 @property(strong,nonatomic) NSString *accountDescription;
 @property(nonatomic) BOOL defaultMethod;
 @property(nonatomic) BOOL showCCV;
+@property(nonatomic) BOOL isACH;
 @property(strong,nonatomic) NSString *paymentMethodID;
 @property(strong,nonatomic) NSString *accountName;
 @end

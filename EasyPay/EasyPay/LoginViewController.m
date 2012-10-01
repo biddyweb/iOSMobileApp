@@ -128,9 +128,10 @@
     
     // Now parse the second XML document. This one has the actual login information.
     loginDelegate = [[LoginDelegate alloc] init];
-    parser = [[NSXMLParser alloc]
-              initWithData:[[validateLoginResultDelegate validateLoginResultString]
-                            dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString *str = [validateLoginResultDelegate validateLoginResultString];
+    MyLog( @"***********************" );
+    MyLog( @"validataLoginResultString: %@", str );
+    parser = [[NSXMLParser alloc] initWithData:[str dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setDelegate:loginDelegate];
     [parser parse];
     

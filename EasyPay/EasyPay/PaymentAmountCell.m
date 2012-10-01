@@ -13,6 +13,9 @@
 @synthesize dueDateLabel;
 @synthesize totalLabel;
 
++(int)cellHeight {
+    return 31;  // line is 21 + 10 for padding
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -36,7 +39,7 @@
 -(void)layoutSubviews {
     [super layoutSubviews];
     CGRect bounds = [[self contentView] bounds];
-    CGFloat top = 2.0;
+    CGFloat top = 5.0;
     CGFloat inset = 5.0;
     
     float w = bounds.size.width;

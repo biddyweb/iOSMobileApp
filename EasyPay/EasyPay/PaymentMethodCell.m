@@ -13,6 +13,9 @@
 @synthesize accountNameLabel;
 @synthesize accountDescriptionLabel;
 
++ (int)cellHeight {
+    return 21 * 2 + 2 * 5 + 5;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -36,16 +39,17 @@
 -(void)layoutSubviews {
     [super layoutSubviews];
     CGRect bounds = [[self contentView] bounds];
-    CGFloat top = 2.0;
+    CGFloat top = 5.0;
     
     float w = bounds.size.width;
     
     UIFont *font = [accountNameLabel font];
     CGFloat lineHeight = [font lineHeight];
+    
     CGRect topFrame = CGRectMake( 35.0, top, w-30.0, lineHeight );
     CGRect topLeftFrame = CGRectMake( 5.0, top, 30.0, lineHeight );
     
-    top += lineHeight + 4;
+    top += lineHeight + 5;
     CGRect midFrame = CGRectMake( 5.0, top, w, lineHeight );
     
     [defaultMethod setFrame:topLeftFrame];

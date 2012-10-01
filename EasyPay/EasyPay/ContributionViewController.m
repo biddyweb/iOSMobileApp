@@ -8,13 +8,27 @@
 
 #import "ContributionViewController.h"
 #import "LoginDelegate.h"
+#import "Bills.h"
 
 @implementation ContributionViewController
 @synthesize loginDelegate;
+@synthesize maximumContributionLabel;
+@synthesize contributionTextField;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    MyLog( @"got the contribution %@", [textField text] );
-    return YES;
+    NSString *str = [textField text];
+    
+    Bills *bills = [loginDelegate bills];
+    float checkContribution = [str floatValue];
+    if( checkContribution < [bills maximumContribution] ) {
+        [bills setContribution:[str floatValue] ];
+        str = [NSString stringWithFormat:@"$%.2f", [bills contribution] ];
+        [textField setText:str];
+        [textField resignFirstResponder];
+        return YES;
+    }
+    [textField setText:@""];
+    return NO;
 }
 
 
@@ -32,6 +46,16 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    Bills *bills = [loginDelegate bills];
+    
+    NSString *str = [NSString stringWithFormat:@"%.2f", [bills maximumContribution] ];
+    [maximumContributionLabel setText:str];
+
+    str = [NSString stringWithFormat:@"%.2F", [bills contribution] ];
+    [contributionTextField setText:str];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -11,7 +11,8 @@
 
 @interface ContributionViewController : UIViewController <UITextFieldDelegate>
 @property (strong,nonatomic) LoginDelegate *loginDelegate;
-
+@property (strong,nonatomic) IBOutlet UILabel *maximumContributionLabel;
+@property (strong,nonatomic) IBOutlet UITextField *contributionTextField;
 -(IBAction) doneButton:(id)sender;
 
 @end

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class LoginDelegate;
+
 @interface DefaultPaymentMethodViewController : UIViewController
--(IBAction)makeDefault:(id)sender;
+@property(strong,nonatomic) LoginDelegate *loginDelegate;
+@property(nonatomic) int paymentMethodIndex;
+
+-(IBAction)makeDefaultAction:(id)sender;
+-(IBAction)cancelAction:(id)sender;
 @end

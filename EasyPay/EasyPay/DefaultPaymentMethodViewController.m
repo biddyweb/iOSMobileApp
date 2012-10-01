@@ -7,10 +7,28 @@
 //
 
 #import "DefaultPaymentMethodViewController.h"
+#import "LoginDelegate.h"
+#import "PaymentMethod.h"
 
 
 @implementation DefaultPaymentMethodViewController
--(IBAction)makeDefault:(id)sender {
+@synthesize loginDelegate;
+@synthesize paymentMethodIndex;
+
+
+-(IBAction)makeDefaultAction:(id)sender {
+    PaymentMethod *meth = [loginDelegate defaultPaymentMethod];
+    [meth setDefaultMethod:FALSE];      // clear the previous default
+    
+    NSMutableArray *array = [loginDelegate paymentMethodArray];
+    meth = [array objectAtIndex:paymentMethodIndex];
+    [loginDelegate setDefaultPaymentMethod:meth];
+    [meth setDefaultMethod:TRUE];       // set the current default
+    
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+-(IBAction)cancelAction:(id)sender {
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
