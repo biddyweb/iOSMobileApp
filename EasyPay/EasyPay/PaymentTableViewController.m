@@ -8,23 +8,14 @@
 
 #import "PaymentTableViewController.h"
 #import "PaymentDateViewController.h"
-#import "MakePaymentViewController.h"
-#import "DefaultPaymentMethodViewController.h"
+#import "SelectPaymentMethodTableViewController.h"
 #import "ContributionViewController.h"
-#import "PaymentMethodCell.h"
 #import "PaymentAmountCell.h"
-#import "EditablePaymentAmountCell.h"
-#import "PaymentDateCell.h"
-#import "PaymentButtonCell.h"
 #import "LoginDelegate.h"
-#import "PaymentMethod.h"
 #import "Bill.h"
 #import "Bills.h"
 #import "util.h"
 
-
-#define PAYMENT_METHOD 0
-#define PAYMENT_AMOUNT 1
 
 
 @implementation PaymentTableViewController
@@ -75,198 +66,143 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    int rows = 0;
-    switch( section ) {
-        case PAYMENT_METHOD: {
-            NSMutableArray *array = [loginDelegate paymentMethodArray];
-            rows = [array count];
-        } break;
-        case PAYMENT_AMOUNT: {
-            NSMutableArray *array = [loginDelegate billArray];
-            rows = [array count];   // plus 1 for the total
-            Bills *bills = [loginDelegate bills];
-            if( [bills maximumContribution] > 0.0 ) {
-                contribution = TRUE;
-                contributionRow = rows;
-                rows++;
-            }
-            if( [bills transactionFeeCreditCard] > 0.0
-               || [bills transactionFeeEFT] > 0.0
-               || [bills transactionFeeEFTPercent] > 0.0
-               || [bills transactionFeeCreditCardPercent] > 0.0 ) {
-                transactionFee = TRUE;
-                transactionFeeRow = rows;
-                rows++;
-            }
-            totalRow = rows;
-            rows++;
-            makePaymentRow = rows;
-            rows++;
-            MyLog( @"%d rows in PAYMENT_AMOUNT: c: %d tr: %d to: %d", rows, contributionRow, transactionFeeRow, totalRow );
-        } break;
+{  
+    NSMutableArray *array = [loginDelegate billArray];
+    int rows = [array count];   // plus 1 for the total
+    Bills *bills = [loginDelegate bills];
+    if( [bills maximumContribution] > 0.0 ) {
+        contribution = TRUE;
+        contributionRow = rows;
+        rows++;
     }
-
+    
+    if( [bills transactionFeeCreditCard] > 0.0
+       || [bills transactionFeeEFT] > 0.0
+       || [bills transactionFeeEFTPercent] > 0.0
+       || [bills transactionFeeCreditCardPercent] > 0.0 ) {
+        transactionFee = TRUE;
+        transactionFeeRow = rows;
+        rows++;
+    }
+    totalRow = rows;
+    rows++;
+    makePaymentRow = rows;
+    rows++;
+    
+//    MyLog( @"%d rows  c: %d tr: %d to: %d", rows, contributionRow, transactionFeeRow, totalRow );
     return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MyLog( @"cellForRowAtIndexPath section:%d row:%d", [indexPath section], [indexPath row] );
-    UITableViewCell *cell;
     int row = [indexPath row];
 
-    switch( [indexPath section] ) {
-        case PAYMENT_METHOD: {
-            PaymentMethodCell *pmc;
-            pmc = [tv dequeueReusableCellWithIdentifier:@"PaymentMethodCell"];
+//    MyLog( @"cellForRowAtIndexPath row:%d", row );
+    static NSString *cellIdentifier = @"PaymentAmountCell";
+    
+    if( row == makePaymentRow ) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                       reuseIdentifier:@"UITableViewCell"];
+        Bills *bills = [loginDelegate bills];
+        if( [bills paymentPending] ) {
+            [[cell textLabel] setText:@"Payment Pending"];
+        } else {
+            [[cell textLabel] setText:@"Make Payment"];
+        }
+        return cell;
+        
+    } else {
+        PaymentAmountCell *pac;
+        pac = [tv dequeueReusableCellWithIdentifier:cellIdentifier];
+        if( !pac ) {
+            pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                           reuseIdentifier:cellIdentifier];
+        }
 
-            if( !pmc ) {
-                pmc = [[PaymentMethodCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                reuseIdentifier:@"PaymentMethodCell"];
+        NSMutableArray *array = [loginDelegate billArray];
+        int count = [array count];
+        if( row < count ) {
+            Bill *bill = [array objectAtIndex:[indexPath row]];
+        
+            UILabel *label = [pac accountNumberLabel];
+            [label setText:[bill accountNumberDisplay]];
+        
+            label = [pac dueDateLabel];
+            NSString *str = [bill dueDate];
+            NSArray *array = [str componentsSeparatedByString:@" "];
+            [label setText:[array objectAtIndex:0]];
+        
+            label = [pac totalLabel];
+            [label setText:[NSString stringWithFormat:@"$%.2f", [bill totalDue]]];
+            [pac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        
+        } else if( row == contributionRow ) {
+            Bills *bills = [loginDelegate bills];
+            
+            UILabel *label = [pac accountNumberLabel];
+            [label setText:@"Contribution"];
+            
+            label = [pac dueDateLabel];
+            [label setText:@""];
+            
+            label = [pac totalLabel];
+            NSString *str = [NSString stringWithFormat:@"%.2f", [bills contribution] ];
+            [label setText:str];
+            [pac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            
+        } else if( row == transactionFeeRow ) {
+            //Bills *bills = [loginDelegate bills];
+            
+            UILabel *label = [pac accountNumberLabel];
+            [label setText:@"Fee"];
+            
+            label = [pac dueDateLabel];
+            [label setText:@""];
+            
+            label = [pac totalLabel];
+            [label setText:@""];
+            
+        } else if( row == totalRow ) {
+            Bills *bills = [loginDelegate bills];
+            
+            float total = 0.0;
+            for( Bill *b in array ) {
+                total += [b totalDue];
             }
-            NSMutableArray *array = [loginDelegate paymentMethodArray];
-            PaymentMethod *meth = [array objectAtIndex:[indexPath row]];
-            if( [meth defaultMethod] == TRUE ) {
-                pmc.defaultMethod.text = @"\u2611";
-                [loginDelegate setDefaultPaymentMethod:meth];
-            } else {
-                pmc.defaultMethod.text = @"\u2610";
+            if( contributionRow ) {
+                total += [bills contribution];
             }
-            pmc.accountNameLabel.text = [meth accountName];
-            pmc.accountDescriptionLabel.text = [meth accountDescription];
-            //[pmc setAccessoryType:UITableViewCellAccessoryCheckmark];
-
-            return pmc;
-        } break;
-        case PAYMENT_AMOUNT: {
-            NSMutableArray *array = [loginDelegate billArray];
-            int count = [array count];
-            if( row < count ) {
-                PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                if( !pac ) {
-                    pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:@"PaymentAmountCell"];
-                }
-
-                Bill *bill = [array objectAtIndex:[indexPath row]];
-                
-                UILabel *label = [pac accountNumberLabel];
-                [label setText:[bill accountNumberDisplay]];
-                
-                label = [pac dueDateLabel];
-                NSString *str = [bill dueDate];
-                NSArray *array = [str componentsSeparatedByString:@" "];
-                [label setText:[array objectAtIndex:0]];
-                
-                label = [pac totalLabel];
-                [label setText:[NSString stringWithFormat:@"$%.2f", [bill totalDue]]];
-                [pac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-
-                cell = pac;
-            } else if( row >= count ) {
-                if( row == contributionRow ) {
-                    Bills *bills = [loginDelegate bills];
-                    
-                    PaymentAmountCell *epac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                    if( !epac ) {
-                        epac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                        reuseIdentifier:@"PaymentAmountCell"];
-                    }
-                    UILabel *label = [epac accountNumberLabel];
-                    [label setText:@"Contribution"];
-                    
-                    label = [epac dueDateLabel];
-                    [label setText:@""];
-                    
-                    label = [epac totalLabel];
-                    NSString *str = [NSString stringWithFormat:@"%.2f", [bills contribution] ];
-                    [label setText:str];
-                    [epac setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-
-                    cell = epac;
-                } else if( row == transactionFeeRow ) {
-                    Bills *bills = [loginDelegate bills];
-
-                    PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                    if( !pac ) {
-                        pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                       reuseIdentifier:@"PaymentAmountCell"];
-                    }
-                    UILabel *label = [pac accountNumberLabel];
-                    [label setText:@"Fee"];
-                    
-                    label = [pac dueDateLabel];
-                    [label setText:@""];
-                    
-                    label = [pac totalLabel];
-                    [label setText:@""];
-                    cell = pac;
-                } else if( row == totalRow ) {
-                    Bills *bills = [loginDelegate bills];
-
-                    float total = 0.0;
-                    for( Bill *b in array ) {
-                        total += [b totalDue];
-                    }
-                    if( contributionRow ) {
-                        total += [bills contribution];
-                    }
-                    if( transactionFeeRow ) {
-                        total += [bills transactionFee];
-                    }
-                    
-                    PaymentAmountCell *pac = [tv dequeueReusableCellWithIdentifier:@"PaymentAmountCell"];
-                    if( !pac ) {
-                        pac = [[PaymentAmountCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                       reuseIdentifier:@"PaymentAmountCell"];
-                    }
-                    UILabel *label = [pac accountNumberLabel];
-                    [label setText:@"Total"];
-                    
-                    [[pac dueDateLabel] setText:@""];
-                    
-                    label = [pac totalLabel];
-                    [label setText:[NSString stringWithFormat:@"$%.2f", total]];
-                    cell = pac;
-                } else if( row == makePaymentRow ) {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                  reuseIdentifier:@"UITableViewCell"];
-                    Bills *bills = [loginDelegate bills];
-                    if( [bills paymentPending] ) {
-                        [[cell textLabel] setText:@"Payment Pending"];
-                    } else {
-                        [[cell textLabel] setText:@"Make Payment"];
-                    }
-                } else {
-                    MyLog( @"some other row" );
-                }
+            if( transactionFeeRow ) {
+                total += [bills transactionFee];
             }
-        } break;
-    }    
-    return cell;
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *str;
-    switch( section ) {
-        case PAYMENT_METHOD: str = @"PaymentMethod"; break;
-        case PAYMENT_AMOUNT: str = @"Account    Due Date         Amount"; break;
+            [loginDelegate setPaymentTotal:total];
+            
+            UILabel *label = [pac accountNumberLabel];
+            [label setText:@"Total"];
+            
+            [[pac dueDateLabel] setText:@""];
+            
+            label = [pac totalLabel];
+            [label setText:[NSString stringWithFormat:@"$%.2f", total]];
+            
+        } else {
+            MyLog( @"some other row" );
+        }
+        return pac;
     }
-    return str;
+}
+    
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Account    Due Date         Amount";
 }
 
 #pragma mark - TableView Delegate methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat h = 0.0;
-    switch( [indexPath section] ) {
-    case PAYMENT_METHOD: h = [PaymentMethodCell cellHeight]; break;
-    case PAYMENT_AMOUNT: h = [PaymentAmountCell cellHeight]; break;
-    }
-    return h;
+    return [PaymentAmountCell cellHeight];
 }
 
 
@@ -274,43 +210,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
-    NSLog( @"didSelectRowAtIndexPath - section: %d - row: %d", [indexPath section], row );
-    if( [indexPath section] == PAYMENT_AMOUNT ) {            
-        NSArray *array = [loginDelegate billArray];
-        if( row < [array count] ) {
-            Bill *bill = [array objectAtIndex:row];
-            NSDateFormatter *df = [[NSDateFormatter alloc] init];
-            [df setDateFormat:@"MM/dd/yyyy hh:mm:ss a"];
-            NSDate *d = [df dateFromString:[bill dueDate]];
-
-            PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
-            [paymentDateViewController setLoginDelegate:loginDelegate];
-            [paymentDateViewController setDate:d];
-            [paymentDateViewController setBillIndex:row];
-            [[self navigationController] pushViewController:paymentDateViewController
-                                                   animated:YES];
-        } else if( row == contributionRow ) {
-            ContributionViewController *contributionViewController = [[ContributionViewController alloc] init];
-            [contributionViewController setLoginDelegate:loginDelegate];
-            [[self navigationController] pushViewController:contributionViewController
-                                                   animated:YES];
-        } else if( row == makePaymentRow ) {
-            Bills *bills = [loginDelegate bills];
-            if( ![bills paymentPending] ) {
-                MakePaymentViewController *makePaymentViewController = [[MakePaymentViewController alloc] init];
-                [makePaymentViewController setLoginDelegate:loginDelegate];
-                [[self navigationController] pushViewController:makePaymentViewController
-                                                       animated:YES];
-            }
-        }
-    } else if( [indexPath section] == PAYMENT_METHOD ) {
-        NSMutableArray *array = [loginDelegate paymentMethodArray];
-        if( [array count] > 1 ) {   // only if more than one method
-            DefaultPaymentMethodViewController *defaultPaymentMethodViewController =
-            [[DefaultPaymentMethodViewController alloc] init];
-            [defaultPaymentMethodViewController setPaymentMethodIndex:[indexPath row]];
-            [defaultPaymentMethodViewController setLoginDelegate:loginDelegate];
-            [[self navigationController] pushViewController:defaultPaymentMethodViewController
+//    NSLog( @"didSelectRowAtIndexPath - row: %d", row );
+    
+    NSArray *array = [loginDelegate billArray];
+    if( row < [array count] ) {
+        Bill *bill = [array objectAtIndex:row];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"MM/dd/yyyy hh:mm:ss a"];
+        NSDate *d = [df dateFromString:[bill dueDate]];
+        
+        PaymentDateViewController *paymentDateViewController = [[PaymentDateViewController alloc] init];
+        [paymentDateViewController setLoginDelegate:loginDelegate];
+        [paymentDateViewController setDate:d];
+        [paymentDateViewController setBillIndex:row];
+        [[self navigationController] pushViewController:paymentDateViewController
+                                               animated:YES];
+    } else if( row == contributionRow ) {
+        ContributionViewController *contributionViewController = [[ContributionViewController alloc] init];
+        [contributionViewController setLoginDelegate:loginDelegate];
+        [[self navigationController] pushViewController:contributionViewController
+                                               animated:YES];
+    } else if( row == makePaymentRow ) {
+        Bills *bills = [loginDelegate bills];
+        if( ![bills paymentPending] ) {
+            SelectPaymentMethodTableViewController *selectPaymentMethodTableViewController = [[SelectPaymentMethodTableViewController alloc] init];
+            [selectPaymentMethodTableViewController setLoginDelegate:loginDelegate];
+            [[self navigationController] pushViewController:selectPaymentMethodTableViewController
                                                    animated:YES];
         }
     }

@@ -20,9 +20,10 @@
 @synthesize customerServiceEmail;
 @synthesize assistanceMessage;
 @synthesize paymentMethodArray;
-@synthesize defaultPaymentMethod;
+@synthesize paymentMethod;
 @synthesize billArray;
 @synthesize bills;
+@synthesize paymentTotal;
 
 
 -(id)init {

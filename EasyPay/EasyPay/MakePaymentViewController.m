@@ -9,6 +9,7 @@
 #import "MakePaymentViewController.h"
 #import "ReceiptViewController.h"
 #import "LoginDelegate.h"
+#import "PaymentMethod.h"
 #import "Bills.h"
 #import "Bill.h"
 #import "util.h"
@@ -18,6 +19,7 @@
 @synthesize connectionInProgress;
 @synthesize loginDelegate;
 @synthesize accountNameLabel;
+@synthesize accountDescriptionLabel;
 @synthesize paymentAmountLabel;
 @synthesize ccvTextField;
 
@@ -190,9 +192,17 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    Bills *bills = [loginDelegate bills];
-    [accountNameLabel setText:[bills accountNumberName]];
+    PaymentMethod *paymentMethod = [loginDelegate paymentMethod];
+    
+    [accountNameLabel setText:[paymentMethod accountName]];
+    [accountDescriptionLabel setText:[paymentMethod accountDescription]];
+    
+    if( [paymentMethod showCCV] == NO ) {
+        [ccvTextField setHidden:NO];
+    }
+    [paymentAmountLabel setText:[NSString stringWithFormat:@"$%.2f", [loginDelegate paymentTotal]]];
 }
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
