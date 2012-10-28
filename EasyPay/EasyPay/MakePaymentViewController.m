@@ -48,7 +48,7 @@
     [msg appendString:stringField( @"businessId", @"business id" ) ];        //long
     [msg appendString:stringField( @"customerNumber", @"5678" ) ];    // string
     
-    [msg appendString:@"<accountPaymentArray>"];
+    [msg appendString:@"<AccountPaymentArray>"];
     Bills *bills = [loginDelegate bills];
     NSArray *billArray = [loginDelegate billArray];
     int count = [billArray count];
@@ -56,21 +56,23 @@
         Bill *bill = [billArray objectAtIndex:i];
         
         [msg appendString:@"<AccountPayment>"];
-        [msg appendString:stringField( @"AccountNumber", @"1234" ) ];     //string
-        [msg appendString:floatField( @"AmountDue", 1000000.0 ) ];         // decimal
-        [msg appendString:floatField( @"AmountDueCurrent", 2000000.0 ) ];  // decimal
-        [msg appendString:floatField( @"AmountDuePrevious", 3000000.0 ) ]; // decimal
-        [msg appendString:floatField( @"AmountDueLate", 0.0 ) ];     // decimal
-        [msg appendString:stringField( @"DueDate", [bill dueDate] ) ];           // dateTime
-        [msg appendString:floatField( @"AmountPaid", [bill totalDue]) ];        // decimal
+        [msg appendString:stringField( @"AccountNumber", [bill accountNumber] ) ];      //string
+        [msg appendString:floatField( @"AmountDue", [bill totalPaid] ) ];               // decimal
+        [msg appendString:floatField( @"AmountDueCurrent", [bill currentCharges] ) ];   // decimal
+        [msg appendString:floatField( @"AmountDuePrevious", [bill balanceForward] ) ];  // decimal
+        [msg appendString:floatField( @"AmountDueLate", 0.0 ) ];                        // decimal
+        [msg appendString:stringField( @"DueDate", [bill dueDate] ) ];                  // dateTime
+        [msg appendString:floatField( @"AmountPaid", [bill totalDue]) ];                // decimal
         [msg appendString:@"</AccountPayment>"];
     }
-    [msg appendString:@"</accountPaymentArray>"];
+    [msg appendString:@"</AccountPaymentArray>"];
     
-    [msg appendString:floatField( @"contributionAmount", [bills contribution] ) ];//decimal
-//    [msg appendString:stringField( @"paymentDate", ) ];       // dateTime
-//    [msg appendString:stringField( @"paymentMethodId", ) ];   // long
-    [msg appendString:stringField( @"ccv2", [ccvTextField text] ) ];                // string
+    [msg appendString:floatField( @"ContributionAmount", [bills contribution] ) ];      //decimal
+//    [msg appendString:stringField( @"PaymentDate", ) ];       // dateTime
+    
+    PaymentMethod *paymentMethod = [loginDelegate paymentMethod];
+    [msg appendString:stringField( @"PaymentMethodId", [paymentMethod paymentMethodID ] ) ];   // long
+    [msg appendString:stringField( @"CCV2", [ccvTextField text] ) ];                // string
     [msg appendString:
      @"</InitiatePayment>"
      @"</soap:Body"

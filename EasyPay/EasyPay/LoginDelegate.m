@@ -33,7 +33,8 @@
     paymentMethodArray = [[NSMutableArray alloc] init];
     billArray = [[NSMutableArray alloc] init];
     bills = [[Bills alloc] init];
-    
+    paymentMethod = [[PaymentMethod alloc] init];
+
     return self;
 }
 
@@ -74,7 +75,6 @@
         }
     } else if( [elementName isEqualToString:@"PaymentMethod"] ) {
         MyLog( @"elementName: %@", elementName );
-        PaymentMethod *paymentMethod = [[PaymentMethod alloc] init];
         for( key in attributeDict ) {
             MyLog(@"Key: %@, Value: %@", key, [attributeDict objectForKey: key]);
 
