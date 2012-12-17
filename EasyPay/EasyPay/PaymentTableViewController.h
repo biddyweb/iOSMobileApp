@@ -12,7 +12,8 @@
 @class PaymentDateViewController;
 
 @interface PaymentTableViewController : UITableViewController <NSXMLParserDelegate> {
-    BOOL transactionFee;
+    float transactionFee;
+    BOOL transactionFeeCharged;
     BOOL contribution;
     float contributionAmount;
     int transactionFeeRow;
@@ -20,7 +21,6 @@
     int totalRow;
     int makePaymentRow;
     
-    NSMutableData *xmlData;
     NSMutableString *xmlCharacters;
 }
 @property(strong,nonatomic) LoginDelegate *loginDelegate;

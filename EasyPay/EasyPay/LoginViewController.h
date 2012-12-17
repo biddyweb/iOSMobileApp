@@ -1,5 +1,5 @@
 //
-//  KGDViewController.h
+//  LoginViewController.h
 //  EasyPay
 //
 //  Created by Hank Warren on 5/19/12.
@@ -21,6 +21,8 @@
 @property(strong,nonatomic) IBOutlet UITextField *usernameTextField;
 @property(strong,nonatomic) IBOutlet UITextField *passwordTextField;
 @property(strong,nonatomic) IBOutlet UILabel *errorLabel;
+@property(strong,nonatomic) IBOutlet UILabel *tapLabel;
+@property(strong,nonatomic) IBOutlet UIActivityIndicatorView *verifyIndicator;
 
 @property(strong,nonatomic) NSString *vendorString;
 @property(strong,nonatomic) NSString *vendorIDString;

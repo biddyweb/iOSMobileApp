@@ -14,6 +14,7 @@
 #import "LoginDelegate.h"
 #import "Bill.h"
 #import "Bills.h"
+#import "PaymentMethod.h"
 #import "util.h"
 
 
@@ -28,7 +29,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        transactionFee = FALSE;
+        transactionFeeCharged = FALSE;
+        transactionFee = 0.0;
         contribution = FALSE;
         contributionRow = 0;
         transactionFeeRow = 0;
@@ -84,7 +86,7 @@
        || [bills transactionFeeEFT] > 0.0
        || [bills transactionFeeEFTPercent] > 0.0
        || [bills transactionFeeCreditCardPercent] > 0.0 ) {
-        transactionFee = TRUE;
+        transactionFeeCharged = TRUE;
         transactionFeeRow = rows;
         rows++;
     }
@@ -157,6 +159,25 @@
         } else if( row == transactionFeeRow ) {
             //Bills *bills = [loginDelegate bills];
             
+            // calculateTransactionFeeFor... sends a command to the web site
+            // Probably need an activity indicator here.
+            
+            // Compute the total paid/omount due?
+            // Does the contribution enter into calculation?
+            // Where does the discount amount come from
+            Bills *bills = [loginDelegate bills];
+            
+            float amountPaid = 0.0;
+            for( Bill *b in array ) {
+                amountPaid += [b totalDue];
+            }
+            MyLog( @"call calculateTransactionFeeFor:%f", amountPaid );
+            [self calculateTransactionFeeFor:(float)amountPaid
+                          contributionAmount:(float)[bills contribution]
+                              discountAmount:(float)0.0
+                                  businessId:(int)[loginDelegate ID]
+                             paymentMethodId:(int)[[loginDelegate paymentMethod] paymentMethodID]];
+
             UILabel *label = [pac accountNumberLabel];
             [label setText:@"Fee"];
             
@@ -284,85 +305,41 @@
      @"</soap:Body>"
      @"</soap:Envelope>"];
     
+    MyLog( @"%@", msg );
+    
     NSURL *url = [NSURL URLWithString:
                   @"https://mobile.autopayments.com"
                   @"/MobileClientRsc/MobileClientRsc.asmx"];
     
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
                                                        cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                   timeoutInterval:30];
+                                                   timeoutInterval:10];
     NSString *msgLength = [NSString stringWithFormat:@"%d", [msg length]];
     
     [req addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [req addValue:msgLength forHTTPHeaderField:@"Content-Length"];
     [req setHTTPMethod:@"POST"];
     [req setHTTPBody:[msg dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    xmlData = [[NSMutableData alloc] init];
-    
+        
     if( connectionInProgress ) {
         [connectionInProgress cancel];
     }
-    connectionInProgress = [[NSURLConnection alloc] initWithRequest:req
-                                                           delegate:self
-                                                   startImmediately:YES];
-    MyLog( @"connection started" );
-}
-/* The following implement the connection call backs. */
-
-#pragma mark - Connection delegate
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSString* newStr = [[NSString alloc] initWithData:data
-                                             encoding:NSUTF8StringEncoding];
-    MyLog( @"didReceiveData %@", newStr );
+    NSData *xmlData = [NSURLConnection sendSynchronousRequest:req
+                                         returningResponse:&response
+                                                     error:&error];
     
-    [xmlData appendData:data];
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    //    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
-    //                                               encoding:NSUTF8StringEncoding];
-    //    MyLog( @"xmlCheck = %@", xmlCheck );
-    
-    
-    
-    //    NSRange range = [xmlCheck rangeOfString:@"<html>"];
-    //    if( range.length ) {    // maybe this is html - so display it.
-    //        MyLog( @"<html> at %d and %d characters long", range.location, range.length );
-    //        
-    //        if( !webViewController ) {
-    //            webViewController = [[WebViewController alloc] init];
-    //        }
-    //        [[self navigationController] pushViewController:webViewController
-    //                                               animated:YES];
-    //        [webViewController setPage:xmlCheck];
-    //    }
-    
-    
-    // Parse the xml...
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
     [parser setDelegate:self];
     [parser parse];
-    
 }
-
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    connectionInProgress = nil;
-    xmlData = nil;
-    
-    //    NSString *errorString = [NSString stringWithFormat:@"Fetch failed: %@",
-    //                             [error localizedDescription]];
-    //    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:errorString
-    //                                                             delegate:nil
-    //                                                    cancelButtonTitle:@"OK"
-    //                                               destructiveButtonTitle:nil
-    //                                                    otherButtonTitles:nil];
-    //    [actionSheet showInView:[[self view] window]];
-    //    [activityIndicatorView stopAnimating];
-}
-
 
 /*
  * The following messages constitute the xml parser call backs; the joy of SAX.
+ * This is the parser for CalculateTransactionFeeResult
+ *
  */
 #pragma mark - NSXMLParserDelegate
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
@@ -380,9 +357,10 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
-    //    MyLog( @"didEndElement: %@", elementName );
+    MyLog( @"didEndElement: %@", elementName );
     if( [elementName isEqualToString:@"CalculateTransactionFeeResult"] ) {
         transactionFee = [xmlCharacters floatValue];
+        MyLog( @"transactionFee: %f", transactionFee );
     }
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {

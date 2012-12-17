@@ -1,5 +1,5 @@
 //
-//  KGDViewController.m
+//  LoginViewController.m
 //  EasyPay
 //
 //  Created by Hank Warren on 5/19/12.
@@ -105,6 +105,10 @@
     connectionInProgress = [[NSURLConnection alloc] initWithRequest:req
                                                            delegate:self
                                                    startImmediately:YES];
+    
+    // Enable activity indicator? -------------------------------------------
+    //    [activityIndicatorView startAnimating];
+
     MyLog( @"validateLogin - connection started" );
 }
 /* The following implement the connection call backs. */

@@ -132,7 +132,7 @@
     [parser setDelegate:vendorListDelegate];
     [parser parse];
     
-//    MyLog( @"vendorListResultString: %@", [vendorListDelegate vendorListResultString] );
+    MyLog( @"vendorListResultString: %@", [vendorListDelegate vendorListResultString] );
 
     // Now parse the vendorListResultString
     parser = [[NSXMLParser alloc]
@@ -142,7 +142,6 @@
     vendorListResultDelegate = [[VendorListResultDelegate alloc] init];
     [parser setDelegate:vendorListResultDelegate];
     [parser parse];
-    //    [vendorList printArray];
     
     [activityIndicatorView stopAnimating];
     if( [vendorListResultDelegate fault] ) {

@@ -13,6 +13,7 @@
 
 
 @implementation LoginDelegate
+@synthesize ID;
 @synthesize errorMessage;
 @synthesize customerServicePhoneNumber;
 @synthesize customerNumber;
